@@ -1,0 +1,114 @@
+====== Törtek ======
+
+<code pascal tortek.pas>
+program tortek; {2012. majus, angol}
+type szamok=record
+       s1,s2,n1,n2:integer;
+       muv:char;
+       end;
+var i,sz,n,sz1,nn1,ssz,sn,psz,pn,m:integer;
+    a:array[1..100] of szamok;
+    t:text;
+    k:char;
+//2.feladathoz
+function lnko(a,b:integer):integer;
+begin
+  if a=b then lnko:=a;
+  if a<b then lnko:=lnko(a,b-a);
+  if a>b then lnko:=lnko(a-b,b);
+end;
+//5.feladathoz
+function lkkt(a,b:integer):integer;
+begin
+  lkkt:=a*b div lnko(a,b);
+end;
+begin
+writeln('1.feladat');
+  write('Szamlalo: ');
+  readln(sz);
+  write('Nevezo: ');
+  readln(n);
+  if sz mod n = 0 then writeln(sz div n)
+                  else writeln('Nem egesz');
+writeln('2.feladat');
+  writeln('Az lnko() fuggveny elkeszitve');
+writeln('3.feladat');
+   if sz mod n=0 then writeln(sz,'/',n,' = ',sz div n) else
+      if lnko(sz,n)=1 then writeln(sz,'/',n,' = ',sz,'/',n)
+          else writeln(sz,'/',n,' = ',sz div lnko(sz,n),'/',n div lnko(sz,n));
+writeln('4.feladat');
+  write('Szamlalo: ');
+  readln(sz1);
+  write('Nevezo: ');
+  readln(nn1);
+  write(sz,'/',n,' * ',sz1,'/',nn1,' = ');
+  ssz:=sz*sz1;
+  sn:=n*nn1;
+  if ssz mod sn=0 then writeln(ssz,'/',sn,' = ',ssz div sn) else
+      if lnko(ssz,sn)=1 then writeln(ssz,'/',sn,' = ',ssz,'/',sn)
+          else writeln(ssz,'/',sn,' = ',ssz div lnko(ssz,sn),'/',sn div lnko(ssz,sn));
+writeln('5. feladat');
+  writeln('Az lkkt() fuggveny elkeszitve');
+writeln('6.feladat');
+  write(sz,'/',n,' + ',sz1,'/',nn1,' = ');
+  sz:=sz*(lkkt(n,nn1) div n);
+  sz1:=sz1*(lkkt(n,nn1) div nn1);
+  n:=lkkt(n,nn1);
+  nn1:=lkkt(n,nn1);
+  write(sz,'/',n,' + ',sz1,'/',nn1,' = ');
+  psz:=sz+sz1;
+  pn:=n;
+  if psz mod pn=0 then writeln(psz,'/',pn,' = ',psz div pn) else
+      if lnko(psz,pn)=1 then writeln(psz,'/',pn,' = ',psz,'/',pn)
+          else writeln(psz,'/',pn,' = ',psz div lnko(psz,pn),'/',pn div lnko(psz,pn));
+writeln('7.feladat');
+  assign(t,'adat.txt');
+  reset(t);
+  i:=0;
+  while not eof(t) do
+  begin
+    inc(i);
+    with a[i] do
+    begin
+      readln(t,s1,n1,s2,n2,k,muv);
+//    write(s1,' ',n1,' ',s2,' ',n2,' ',muv);
+//    readln;
+    end;
+  end;
+  m:=i;
+  close(t);
+  assign(t,'eredmeny.txt');
+  rewrite(t);
+  for i:=1 to m do
+  begin
+    with a[i] do
+      if muv='+' then
+        begin
+          write(t,s1,'/',n1,' + ',s2,'/',n2,' = ');
+          s1:=s1*(lkkt(n1,n2) div n1);
+          s2:=s2*(lkkt(n1,n2) div n2);
+          n1:=lkkt(n1,n2);
+          n2:=lkkt(n1,n2);
+          write(t,s1,'/',n1,' + ',s2,'/',n2,' = ');
+          psz:=s1+s2;
+          pn:=n1;
+          if psz mod pn=0 then writeln(t,psz,'/',pn,' = ',psz div pn) else
+            if lnko(psz,pn)=1 then writeln(t,psz,'/',pn,' = ',psz,'/',pn)
+              else writeln(t,psz,'/',pn,' = ',psz div lnko(psz,pn),'/',pn div lnko(psz,pn));
+        end {if}
+        else
+        begin {if muv = '*'}
+          write(t,s1,'/',n1,' * ',s2,'/',n2,' = ');
+          ssz:=s1*s2;
+          sn:=n1*n2;
+          if ssz mod sn=0 then writeln(t,ssz,'/',sn,' = ',ssz div sn) else
+            if lnko(ssz,sn)=1 then writeln(t,ssz,'/',sn,' = ',ssz,'/',sn)
+              else writeln(t,ssz,'/',sn,' = ',ssz div lnko(ssz,sn),'/',sn div lnko(ssz,sn));
+        end; {else}
+  end;{for}
+  close(t);
+  writeln('Az adatok az "eredmeny.txt"-be kiiratva.');
+readln;
+end.
+
+</code>

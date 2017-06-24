@@ -1,0 +1,67 @@
+====== Ciklusok. Előtesztelős ciklus. While ======
+
+===== While ciklus =====
+
+Formátum
+
+<code pascal while.txt>
+While logikai_kifejezés do 
+  {ciklusmag ismétlése,
+   amíg a logikai_kifejezés IGAZ};
+</code>
+
+Példa
+
+<code pascal while.pas>
+a := 2;
+while a < 6 do
+begin
+  writeln (a);
+  a := a + 1
+end;
+</code>
+
+===== Végtelen ciklus =====
+
+<code pascal whilevegtelen.pas>
+while true do ;
+</code>
+
+<code pascal whilevegtelen2.pas>
+a := 2;
+while a < 6 do
+  writeln (a);
+{az a ciklusváltozó nem növekszik!}
+</code>
+
+===== Break =====
+
+<code pascal whilebreak.pas>
+var
+  i:integer;
+begin
+  i := 0;
+  while true do
+    begin
+      i := i + 1;
+      if i = 10 then break;
+    end;
+end;
+</code>
+
+===== Continue =====
+
+<code pascal whilecontinue.pas>
+var
+  i:integer;
+begin
+  i := 0;
+  while true do
+    begin
+      i := i + 1;
+      if i = 10 then continue;
+    end;
+end;
+</code>
+
+

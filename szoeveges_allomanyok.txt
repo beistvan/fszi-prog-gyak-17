@@ -1,0 +1,395 @@
+====== Szöveges állományok ======
+
+1. Fájl típusú változó deklarálása 
+<code pascal fajlvaltozo2t.pas>
+var
+  t: text;
+</code>
+
+2. Fájl változó hozzárendelése a háttértáron lévő állományhoz
+
+<code pascal fajlhozzarendel2t.pas>
+Assign(t, 'fajl.txt');
+</code>
+
+3. Fájl beviteli-kiviteli hibáinak vizsgálata fájlmegnyitásakor 
+<code pascal fajlolvasasnyitas2t.pas>
+{$i-}
+Reset(t);
+if IOResult <> 0 then 
+begin
+  Write ('Fajlkezelesi hiba!');
+  Readln;
+  Halt(1);
+end;
+{$i+}
+</code>
+
+4. Megnyitás írásra vagy újraírásra
+<code pascal fajlirasnyitas2t.pas>
+Rewrite(t);
+</code>
+
+5. Megnyitás hozzáírásra
+<code pascal fajlhozzairas2t.pas>
+Append(t);
+</code>
+
+6. Írás a fájlba
+<code pascal fajlbairas2t.pas>
+Write(t, adatok);
+Writeln(t, adatok);
+</code>
+
+7. Olvasás a fájlból
+<code pascal fajlbololvasas2t.pas>
+Read(t, valtozo);
+Readln(t, valtozo);
+</code>
+
+8. Az összes adat beolvasása a fájlból
+<code pascal fajlmindbeolvas2t.pas>
+index:=0;
+While not eof(t) do
+begin
+  index:=index+1;
+  Read(t, tomb[index]);
+end;
+beolvasott_adatmennyiseg := index;
+</code>
+
+9. A fájl bezárása
+<code pascal fajlbezaras2t.pas>
+Close(t);
+</code>
+
+===== Szövegfájl kezelése Pascal nyelven =====
+
+<code pascal szovegfile_kezeles.pas>
+program szovegfile_kezeles;
+var t: text; i, szam:integer;
+begin
+  assign(t, 'szamok.txt');
+  rewrite(t);
+  for i:=1 to 10 do
+    writeln(t, i);
+  close(t);
+
+  reset(t);
+  while not eof(t) do begin
+    readln(t, szam);
+    writeln(szam);
+  end;
+  close(t);
+  readln;
+end.
+</code>
+
+===== Szövegfájl kezelése C nyelven =====
+
+<code c szovegfile_kezeles.c>
+#include <stdio.h>
+
+int main(void)
+{
+    FILE* fp;
+    /* file-open, w = write - írás*/
+    fp = fopen("szamok.txt", "w");
+    if (fp != NULL)
+    {
+        int i;
+        for (i = 1; i <= 10; ++i)
+            fprintf(fp, "%d\n", i); /* file-printf */
+        fclose(fp);                 /* file-close */
+    }
+    else
+    {
+        perror("Nem sikerült megnyitni a fájlt");
+    }
+    /* file-open, r = read - olvasás */
+    fp = fopen("szamok.txt", "rt"); /* megnyitás */
+    if (fp == NULL)
+    {
+        perror("szamok.txt megnyitása");
+        return;    /* nem folytathatjuk! */
+    }
+
+    /*beolvasás fájlból */
+    char s[5];
+    while (fscanf(fp, "%s\n", s) > 0)
+    {
+        printf("%d\n", atoi(s));
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+</code>
+
+===== Szövegfájl kezelése C++ nyelven =====
+
+<code cpp szovegfile_kezeles.cpp>
+// Alapvető file-műveletek
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+int main ()
+{
+    // Hozzárendeli írásra a myfile-t
+    ofstream myfile;
+    // Ez nyitja meg a file-t írásra
+    myfile.open ("szamok.txt");
+    for (int szam = 1; szam <=10; szam++)
+    {
+        myfile <<szam <<endl;
+    }
+    // Hozzárendelés megszüntetése a file lezárásával.
+    myfile.close();
+
+    //beolvasás
+    string line;
+    ifstream myfilein ("szamok.txt");
+    if (myfilein.is_open())
+    {
+        while ( getline (myfilein,line) )
+        {
+            cout << line << '\n';
+        }
+        myfilein.close();
+    }
+
+    else cout << "Nem tudtam megnyitni a fájlt!";
+    return 0;
+}
+
+</code>
+
+===== Szövegfájl kezelése C# nyelven =====
+
+<code csharp szovegfile_kezeles.cs>
+using System;
+using System.IO;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (StreamWriter sw = new StreamWriter("szamok.txt"))
+            {
+                {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        sw.WriteLine(i);
+                    }
+                }
+
+            }
+
+            string line = "";
+            using (StreamReader sr = new StreamReader("szamok.txt"))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+</code>
+
+**A ''szamok.txt'' tartalma**
+
+Ez lesz a konzolkimenet is
+
+<code text szamok.txt>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code>
+
+
+Órai gyakorlat
+
+<code pascal feleles.pas>
+program feleles;
+var t:text;
+    i,n,x:integer;
+    a:array [1..30] of string;
+begin
+  assign(t,'nevsor.txt');
+  reset(t);
+  i:=0;
+  while not eof(t) do
+  begin
+    inc(i);
+    readln(t,a[i]);
+    writeln(a[i]);
+  end;
+  n:=i;
+  close(t);
+  randomize;
+  x:=1+random(n);
+  writeln;
+  writeln('Felelo: ',a[x]);
+  readln;
+end.
+</code>
+
+
+<code pascal gyakorlatvedes.pas>
+program gyakorlatvedes;
+var t:text;
+    i,n,x:integer;
+    cs: string;
+    a:array [1..30] of string;
+begin
+  assign(t,'nevsor.txt');
+  reset(t);
+  i:=0;
+  while not eof(t) do
+  begin
+    inc(i);
+    readln(t,a[i]);
+    writeln(a[i]);
+  end;
+  n:=i;
+  //randomize;
+  for i:=1 to n do
+  begin
+    x:=1+random(n);
+    cs:= a[i];
+    a[i]:= a[x];
+    a[x]:= cs;
+  end;
+  writeln('A labor vedesi sorrend: ');
+  for i:=1 to n do
+    writeln(i:2,'. ',a[i]);
+  readln;
+end.
+</code>
+
+
+<code pascal feleles_hianyzok_nelkul.pas>
+program feleles_hianyzok_nelkul;
+var t:text;
+    i,j,k,n,m,p,x:integer;
+    cs: string;
+    a,h,o:array [1..30] of string;
+begin
+  writeln('Teljes nevsor:');
+  assign(t,'nevsor.txt');
+  reset(t);
+  i:=0;
+  while not eof(t) do
+  begin
+    inc(i);
+    readln(t,a[i]);
+    writeln(i:2,'. ',a[i]);
+  end;
+  n:=i;
+  assign(t,'hianyzok.txt');
+  reset(t);
+  i:=0;
+  while not eof(t) do
+  begin
+    inc(i);
+    readln(t,h[i]);
+    //writeln(i:2,'. ',h[i]);
+  end;
+  m:=i;
+  for i:=1 to m-1 do
+    for j:=i+1 to m do
+      if a[i]>a[j] then
+      begin
+        cs:=a[i];
+        a[i]:=a[j];
+        a[j]:=cs;
+      end;
+  writeln;
+  writeln('Hianyzok nevsora:');
+  for i:=1 to m do
+    writeln(i:2,'. ',h[i]);
+  writeln;
+  writeln('Oran jelenlevok nevsora:');
+  k:=0;
+  for i:=1 to n do
+  begin  //Keressuk azt az a[i]-t, ami nincs a h tombben.
+    j:=1;
+    while (j<=m)and(a[i]<>h[j])do
+      inc(j);
+    if j>m then
+    begin
+      k:=k+1;
+      o[k]:=a[i];
+    end;
+  end;
+  p:=k;//p-az o[] tomb elemeinek szama
+  for i:=1 to p do
+    writeln(i:2,'. ',o[i]);
+  randomize;
+  x:=1+random(p);
+  writeln;
+  writeln('Felelo: ',o[x]);
+  readln;
+end.
+</code>
+
+
+<code text nevsor.txt>
+Bado Edina
+Baksa Adrien
+Barta Erik
+Bagu Cintia-Erzsebet
+Buda Krisztian
+Homoki Janos
+Hofman Attila
+Demjen Dominika
+Ilosvay Aron
+Kerek Vanessza
+Kovacs Petra-Mariann
+Kovacs Julia
+Mirosnicsenko Beatrix
+Orosz Evelin
+Orosz Zsolt
+Papp Imre
+Penzes Zsolt
+Palinszki Alexandra
+Szirmai Stefania
+Szolnoki Gyula
+Toth Ferenc
+Himinec Kalman-Laszlo
+Juhasz Tamas
+</code>
+
+
+
+<code text hianyzok.txt>
+Hofman Attila
+Kovacs Julia
+Mirosnicsenko Beatrix
+Orosz Evelin
+Orosz Zsolt
+Toth Ferenc
+Juhasz Tamas
+Baksa Adrien
+Demjen Dominika
+Kerek Vanessza
+Penzes Zsolt
+Palinszki Alexandra
+Szirmai Stefania
+</code>
+

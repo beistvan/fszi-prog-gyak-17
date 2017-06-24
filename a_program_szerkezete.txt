@@ -1,0 +1,135 @@
+====== A program szerkezete. Kivitel, bevitel. Kifejezések. ======
+
+===== A Pascal program szerkezete =====
+
+A Pascalon írt forráskód legegyszerűbb szerkezete a következő:
+
+<code pascal pasprog.pas>
+program program_neve;
+var változók deklarálása;
+begin
+   
+   parancsok, amit a program végrehajtson;
+
+end.
+
+</code>
+
+A teljesebb Pascal program szerkezete a következő:
+
+<code pascal pasprogteljes.pas>
+
+{programfej} 
+{globális hatású fordító direktívák} 
+Program programnev;
+{Definíciós ill. deklarációs rész} 
+{lokális hatású fordító direktívák} 
+uses  {unitok felsorolása} 
+label {cimkék deklarációja} 
+const {konstansok deklarálása} 
+type  {típusok deklarálása} 
+var  {változók deklarálása}
+
+procedure eljarasnev (parameterek); 
+{deklarációk} 
+begin 
+    {eljárástörzs} 
+end;
+
+function fuggvenynev (parameterek):fuggvény_típusa; 
+{deklarációk} 
+begin 
+    {függvénytörzs} 
+    fuggvenynev:= utasitas; {függvény eredménye} 
+end;
+
+{fõprogram} 
+begin 
+    {fõprogramtörzs} 
+end.
+
+</code>
+
+===== Kivitel/kiíratás =====
+
+A kivitel, vagyis a szöveges konzolra történő kiíratás a ''Write'' vagy a ''WriteLn'' parancsokkal történik.
+
+<code pascal pashello.pas>
+
+program Hello;
+begin
+  Write('Hello!');
+end.
+
+</code>
+
+===== Formázott kiíratás =====
+
+Formátum
+
+<code pascal formazott_kiiratas1.txt>
+érték : mezőhossz
+</code>
+
+<code pascal formazott_kiiratas2.txt>
+érték : mezőhossz : tizedes_jegyek_száma
+</code>
+
+Példa
+
+<code pascal formazott_kiiratas_pelda.pas>
+writeln(egesz:10);
+writeln(valos:10:8);
+writeln(szoveg:15);
+writeln(egesz:5, valos: 5:3, szoveg: 12);
+</code>
+
+===== Bevitel/beolvasás =====
+
+A bevitel, vagyis a szöveges konzolról történő beolvasás a ''Read'' vagy a ''ReadLn'' parancsokkal történik.
+
+<code pascal pasbeolvas.pas>
+
+program Beolvas;
+var a: real;
+begin
+  Write('Adja meg az "a" értékét: ');
+  Readln(a);
+end.
+
+</code>
+
+===== Kifejezések =====
+
+Értékadás a '':='' karakterekkel történik.
+
+<code pascal ertekadas.txt>
+változó_neve := kifejezés;
+</code>
+
+Példa.
+
+<code pascal ertekadas.pas>
+b := 5;
+</code>
+
+Aritmetikai műveletek a Pascalban:
+
+
+^  Művelet  ^  Elvégzett művelet  ^  Operandusok  ^  Eredmény  ^
+|  +  | Összeadás vagy pozitív előjel  |  valós vagy egész  |  valós vagy egész  |
+|  -  | Kivonás vagy negatív előjel  |  valós vagy egész  |  valós vagy egész  |
+|  *  | Szorzás  | valós vagy egész |  valós vagy egész  | 
+|  /  | Osztás  | valós vagy egész |  valós  | 
+|  div  |Egész osztás |  egész  |  egész  | 
+|  mod  |Maradék (maradékos osztás) |  egész  |  egész  |
+
+
+<code pascal kifejezes.pas>
+program kifejezes;
+var x: real;
+begin   
+   x := - 1 + 2 / 4 * 5 - 6 mod 4 + 7 div 3;
+end.
+
+</code>

@@ -1,0 +1,55 @@
+====== Szorzás tétele ======
+
+
+Adott egy N elemű számsorozat: A(N). Számoljuk ki az elemek szorzatát!
+
+<code bash szorzat.txt>
+Eljárás:
+    P := 1
+    Ciklus I = 1-től N-ig
+	P := P * A(I)
+    Ciklus vége
+Eljárás vége.
+</code>
+
+Pascal forráskód
+
+<code pascal szorzat.pas>
+program szorzat;
+var a:array [1..10] of integer;
+    i: integer;
+    prod: longword;
+begin
+  randomize;
+  prod:=1;
+  for i:=1 to 10 do
+  begin
+    a[i]:=random(30);
+    writeln('a[',i,']= ',a[i]);
+    prod:=prod*a[i];
+  end;
+  writeln('szorzat = ',prod);
+  readln;
+end.
+</code>
+
+[[https://ideone.com/fasJ5B | A <szorzat.pas> forráskódjának futtatása online]]
+
+Órai gyakorlat
+
+<code pascal szorzas.pas>
+program szorzas;
+const n=8;
+var i, p: integer;
+    a: array [1..n] of integer;
+begin
+  p:=1;
+  for i:= 1 to n do
+  begin
+    write(' a[',i,']='); readln(a[i]);
+    p:=p*a[i];
+  end;
+  writeln('A tomb elemeinek szorzata: ',p);
+  readln;
+end.
+</code>

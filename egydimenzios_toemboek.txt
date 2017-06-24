@@ -1,0 +1,98 @@
+====== Egydimenziós tömbök ======
+
+Formátum
+<code pascal egydimtomb.txt>
+type
+  típus_megnevezése = array [felsorolás_típus] of adattípus;
+</code>
+
+Példa
+
+<code pascal egydimtomb1.pas>
+type
+  felsorolas_tipus = 1..50;
+  tomb_tipus = array [felsorolas_tipus] of integer;
+</code>
+
+Ugyan az, mint a
+
+<code pascal egydimtomb2.pas>
+type
+  tomb_tipus = array [1..50] of integer;
+</code>
+
+
+<code pascal egydimtomb3.pas>
+const 
+  n = 10;
+type
+  tomb_tipus = array [1..n] of integer;
+var
+  tombom : tomb_tipus; 
+  i : integer;
+begin
+  for i := 1 to n do
+    read(tombom[i]);
+  tombom[2] := 3;  
+end;
+</code>
+
+<code pascal tomb_elso.pas>
+program tomb_elso;
+const 
+  n = 10;
+type
+  tomb_tipus = array [1..n] of integer;
+var
+  tombom : tomb_tipus; 
+  i : integer;
+//const tomb: tomb_tipus = (2, 5, 6, 7, 4, 6, 1, 2, 5, 9);
+begin
+  for i := 1 to n do
+    readln(tombom[i]);
+  tombom[2] := 3;  
+  for i := 1 to n-1 do
+    write(tombom[i],', ');
+  write(tombom[n],'.');
+  readln;
+end.
+</code>
+
+===== Nyitott tömbök =====
+
+Free Pasca verziója legalább 2 és a Turbo Pascal verziója legalább 7.
+
+<code pascal nyitott_tomb.pas>
+program nyitott_tomb;
+Procedure tomb_nyomtatas(egyTomb: array of integer);
+var
+  k: integer;
+begin
+  for k := 0 to High(egyTomb) do
+    Write(egyTomb[k]:3);
+  WriteLn
+end;
+const
+  A: array [-1..2] of integer = (0,1,2,3);
+  B: array [5..7] of integer = (4,5,6);
+begin
+  tomb_nyomtatas(A);
+  tomb_nyomtatas(B);
+  readln;
+end.
+</code>
+
+<code pascal tomb_hossz.pas>
+program tomb_hossz;
+const
+  a:array[-4..5]of byte =(1,2,3,4,5,6,7,8,9,10);
+var
+  i:integer;
+begin
+  writeln(high(a));
+  writeln(low(a));
+  for i:=low(a) to high(a) do
+    write(a[i]:3);
+  readln;
+end.
+</code>

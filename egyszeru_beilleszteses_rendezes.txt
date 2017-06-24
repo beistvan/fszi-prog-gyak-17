@@ -1,0 +1,98 @@
+====== Egyszerű beillesztéses rendezés ======
+
+
+**Módszer lényege**: Mintha kártyáinkat egyesével felvéve sorba raknánk. (N-1 menet)
+
+<code bash beilleszt.txt>
+Eljárás:
+    Ciklus J = 2-től N-ig
+        I := J - 1
+        A := A(J)
+        Ciklus amíg I > 0 és A < A(I)
+            A(I + 1) := A(I)
+            I := I - 1
+        Ciklus vége
+        A(I + 1) := A
+    Ciklus vége
+Eljárás vége.
+</code>
+
+DEMO
+
+Hatékonysági mutatók \\
+**Tárigény**: N+1 \\
+**Összehasonlítások száma**: N-1-től N*(N+1)/2-1-ig változhat \\
+**Mozgatások száma**: 2*N-1-től 2*(N-1)+N*(N-1)/2-ig lehetséges \\
+**Végrehajtási idő**: 1950 s (N=500)
+
+
+
+Pascal forráskód
+
+<code pascal rendezes_egyszeru_beillesztessel.pas>
+program rendezes_egyszeru_beillesztessel;
+const n = 10;
+var a: array [1..n] of integer;
+    i, j, x: integer;
+begin
+  randomize;
+  //A tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(55);
+    write(a[i], ' ');
+  end;
+  Writeln;
+  //Tömb rendezése egyszerű beillesztessél
+  for j:=2 to n do
+  begin
+    i:=j-1;
+    x:=a[j];
+    while (i>0) and (x<a[i]) do
+    begin
+      a[i+1]:=a[i];
+      i:=i-1;
+    end;
+    a[i+1]:=x;
+  end;
+  writeln('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i], ' ');
+  readln;
+end.
+
+</code>
+
+
+[[https://ideone.com/Cz1eXs | A <rendezes_egyszeru_beillesztessel.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal beilleszteses_rendezes>
+program beilleszteses_rendezes;
+const n=8;
+var i,j, aktual : integer;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  for j:=2 to n do
+  begin
+    i:=j-1;
+    aktual:=a[j];
+    while (i>0) and (aktual<a[i]) do
+    begin
+      a[i+1]:=a[i];
+      i:=i-1;
+    end;
+    a[i+1]:=aktual;
+  end;
+  write('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i]:3);
+  readln;
+end.
+</code>

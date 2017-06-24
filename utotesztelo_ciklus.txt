@@ -1,0 +1,66 @@
+====== Ciklusok. Utótesztelő ciklus. Repeat-until/do-while ======
+
+===== Repeat ciklus =====
+
+Formátum
+
+<code pascal repeat.txt>
+repeat
+  {ciklusmag ismétlődik,
+   amíg a logikai_kifejezés HAMIS}; 
+until logikai_kifejezés;
+</code>
+
+Példa
+
+<code pascal repeat.pas>
+a := 2;
+repeat
+  writeln(a);
+  a := a + 1
+until a >= 6; 
+</code>
+
+===== Végtelen ciklus =====
+
+<code pascal repeatvegtelen.pas>
+repeat
+until false;
+</code>
+
+<code pascal repeatvegtelen2.pas>
+a := 2;
+repeat
+  writeln(a);
+until a >= 6; 
+{az a ciklusváltozó nem növekszik!}
+</code>
+
+===== Break =====
+
+<code pascal repeatbreak.pas>
+var
+  i:integer;
+begin
+  i := 0;
+  repeat
+    i := i + 1;
+    if i = 10 then break;
+  until false;
+end;
+</code>
+
+===== Continue =====
+
+<code pascal repeatcontinue.pas>
+var
+  i:integer;
+begin
+  i := 0;
+  repeat
+    i := i + 1;
+    if i = 10 then continue;
+  until false;
+end;
+</code>
+

@@ -1,0 +1,119 @@
+====== Buborékos rendezés ======
+
+
+**Módszer lényege**: 
+Vektor végéről indulva minden elemet összehasonlítunk az előtte lévővel. 
+Ha rossz a sorrend, akkor csere. (Cs=cserehely) 
+Az első menet végére az első helyen a megfelelő elem áll. 
+Ezt az elvet folytatjuk egyre kevesebb elemmel. (N-1 menet)
+
+<code bash buborek.txt>
+Eljárás:
+	Ciklus I = 2-től N-ig
+		Ciklus J = N-től I-ig -1-esével
+			Ha A(J - 1) > A(J) akkor Cs := A(J - 1)
+			A(J - 1) := A(J)
+			A(J) := Cs
+		Ciklus vége
+	Ciklus vége
+Eljárás vége.
+</code>
+
+DEMO
+
+Hatékonysági mutatók
+**Tárigény**: N+1 \\
+**Összehasonlítások száma**: N*(N-1)/2 \\
+**Mozgatások száma**: 0-tól 3*N*(N-1)/2-ig lehetséges \\
+**Végrehajtási idő**: 3620 s (N=500)
+
+
+Pascal forráskód
+
+<code pascal rendezes_buborek_rendezessel.pas>
+program rendezes_buborek_rendezessel;
+const n = 10;
+var a: array [1..n] of integer;
+    i, j, cs: integer;
+begin
+  randomize;
+  //A tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(55);
+    write(a[i], ' ');
+  end;
+  Writeln;
+  //Tömb rendezése buborékos rendezéssel
+  for i:=2 to n do
+    for j:=n downto i do
+      if a[j-1]>a[j] then
+      begin
+        cs:=a[j-1];
+        a[j-1]:=a[j];
+        a[j]:=cs;
+      end;
+  writeln('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i], ' ');
+  readln;
+end.
+
+</code>
+
+[[https://ideone.com/KeMGQr | A <rendezes_buborek_rendezessel.pas> forráskódjának futtatása online ]]
+
+<code pascal rendezes_buborek_rendezessel.pas>
+program kivalasztasos_rendezes;
+const n=8;
+var i,j, cs : integer;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  for i:=1 to n-1 do
+    for j:=i+1 to n do
+      if a[j]<a[i] then
+      begin
+        cs:=a[j];
+        a[j]:=a[i];
+        a[i]:=cs;
+      end;
+  write('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i]:3);
+  readln;
+end.
+
+</code>
+
+Órai gyakorlat
+
+<code pascal buborekos_rendezes.pas>
+program buborekos_rendezes;
+const n=8;
+var i,j, cs : integer;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  for i:=2 to n do
+    for j:=n downto i do
+      if a[j-1]>a[j] then
+      begin
+        cs:=a[j-1];
+        a[j-1]:=a[j];
+        a[j]:=cs;
+      end;
+  write('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i]:3);
+  readln;
+end.
+</code>

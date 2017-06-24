@@ -1,0 +1,141 @@
+====== Helyjegy ======
+
+<code pascal helyjegy.pas>
+program helyjegy;
+type busz=record
+       hely,felsz,lesz:integer;
+     end;
+var i,j,jegysz,vonhosz,fiz,n,osszeg,x,felszallo,leszallo,
+    utolso_szamjegy,megalloszam,km:integer;
+    //ert:string[5]; szam:word;
+    cs:busz;
+    t:text;
+    a,b:array[1..200]of busz;
+    felleszallas:array[0..200] of boolean;
+    uleshely:array[1..48] of byte;
+begin
+  //1.feladat
+  assign(t,'eladott.txt');
+  reset(t);
+  readln(t,jegysz,vonhosz,fiz);
+  i:=0;
+  while not eof(t) do
+    begin
+      inc(i);
+      readln(t,a[i].hely,a[i].felsz,a[i].lesz);
+    end;
+  n:=i;
+  writeln('1.feladat');
+  writeln('Beolvasva ',n,' sor az "eladott.txt"-bol');
+  close(t);
+  //2.feladat
+  writeln('2.feladat');
+  writeln('A legutolso jegyvasarlo sorszama: ',a[jegysz].hely,
+          ', a tavolsag, amit utazott: ',a[jegysz].lesz-a[jegysz].felsz,' km');
+  //3.fealadt
+  writeln('3.feladat');
+  for i:=1 to n do
+    if (a[i].lesz-a[i].felsz)=vonhosz then write(i,'  ');
+  writeln();
+  //4.feladat
+  writeln('4.fealadt');
+  (*writeln(frac(5.9):5:2, ' ', frac(5.1):5:2);
+  i:=1;
+  x:=(a[i].lesz-a[i].felsz)*fiz;
+  writeln('x=',x);
+  x:=9995;
+  str(x,ert);
+  writeln('ert=',ert,' hossz=',length(ert),' ut.kar.=',ert[length(ert)]);
+  case ert[length(ert)] of
+    '3','4','6','7': ert[length(ert)]:='5';
+    '1','2': ert[length(ert)]:='0';
+    '8','9': begin
+               ert[length(ert)]:='0';
+               val(ert,szam,j);
+               szam:=szam+10;
+               str(szam,ert);
+             end;
+  end;
+  val(ert,x,j);
+  osszeg:=osszeg+x;
+  writeln('ert=',ert);
+  x:=9999;
+  writeln('ut.kar.=',x mod 10);
+  writeln('x=',x);
+  *)
+  osszeg:=0;
+  for i:=1 to n do begin
+    x:=(a[i].lesz-a[i].felsz);    //minden 10x+km +71 Ft
+    if x mod 10 = 0 then x:=(x div 10 )*fiz else x:=(x div 10 +1)*fiz; //hiba???
+    utolso_szamjegy:=x mod 10;
+    case utolso_szamjegy of
+      3,4,6,7: x:=x - utolso_szamjegy + 5;
+      1,2: x:=x - utolso_szamjegy;
+      8,9: x:=x - utolso_szamjegy + 10;
+    end;
+    //writeln('i=',i-90,' x=',x); //ha i=90..99
+    osszeg:=osszeg+x;
+  end;
+  writeln('A bevetel: ',osszeg,' Ft.');
+  //5.feladat
+  writeln('5.feladat');
+  b:=a;
+  for i:=1 to n-1 do
+    for j:=1 to n-i do
+       if b[j].felsz>b[j+1].felsz then
+       begin
+         cs:=b[j];
+         b[j]:=b[j+1];
+         b[j+1]:=cs;
+       end;
+  //for i:=1 to n do
+  //  writeln(b[i].hely,' ',b[i].felsz,' ',b[i].lesz);
+
+  i:=n-1;
+  while (i>0)and(b[i].felsz=b[n].felsz) do //b[n].felsz - utolso elotti
+    dec(i);                               //allomason felszallo utasok szama
+  felszallo:=n-i;
+  writeln('felszallok: ',felszallo);
+  leszallo:=0;
+  for i:=1 to n do
+    if(b[i].lesz=b[n].felsz) then
+      inc(leszallo);
+  writeln('leszallok: ',leszallo);
+  //6.feladat
+  writeln('6.feladat');
+  for i:=1 to n do
+  begin
+    felleszallas[a[i].felsz]:=true;
+    felleszallas[a[i].lesz]:=true;
+  end;
+  megalloszam:=0;
+  for i:=0 to 200 do
+    if felleszallas[i] then  begin
+      write(i:4, ' ');
+      inc(megalloszam);
+    end;
+  writeln;
+  writeln('A kiindulo es a cellalomas kozotti megallok szama: ',
+    megalloszam-2);
+  //7.feladat
+  writeln('7.feladat');
+  writeln('Melyik km-en irjuk ki az utaslistat? '); readln(km);
+  for i:=1 to n do
+    if (a[i].felsz<=km) and (km<a[i].lesz) then
+      uleshely[a[i].hely]:=i;
+  assign(t,'kihol.txt');
+  rewrite(t);
+  for i:=1 to 48 do
+  begin
+    write(t,i,'. ules: ');
+    if uleshely[i]>0 then
+      writeln(t,uleshely[i],'. utas')
+    else
+      writeln(t,'ures')
+  end;
+  close(t);
+  writeln('Kiirva a "kihol.txt"-be az utaslista.');
+  readln;
+end.
+
+</code>

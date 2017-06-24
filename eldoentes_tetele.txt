@@ -1,0 +1,141 @@
+====== Eldöntés tétele ======
+
+
+N elemű sorozat és egy a sorozaton értelmezett T tulajdonság. Van-e a sorozatnak legalább egy T tulajdonságú eleme?
+<code bash eldontes1.txt>
+Eljárás:
+	I := 1
+	Ciklus amíg I <= N és A(I) nem T tulajdonságú
+		I := I + 1
+	Ciklus vége
+	VAN := I <= N
+Eljárás vége
+</code>
+
+("VAN" egy logikai változó, amely akkor és csak akkor igaz, ha I %%<=%% N)
+
+Hasonló feladat: igaz-e, hogy a sorozat minden eleme T tulajdonságú?
+<code bash eldontes2.txt>
+Eljárás:
+	I := 1
+	Ciklus amíg I <= N és A(I) T tulajdonságú
+		I := I + 1
+   	Ciklus vége
+	IGAZ := I > N
+Eljárás vége
+</code>
+
+Pascal forráskód
+
+Van-e olyan eleme a tömbnek, ami megfelel a megadott feltételnek?
+
+<code pascal eldontes_vane.pas>
+program eldontes_vane;
+const n = 10;
+var a:array [1..n] of integer;
+    i: integer;
+    van: boolean;
+begin
+  randomize;
+  //a tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(10);
+    write(a[i], ' ');
+  end;
+  writeln;
+  //van-e benne 5-ös?
+  i:=1;
+  while (i<=n) and (a[i]<>5) do
+    i:=i+1;
+  van:= i<=n;
+  write('Van-e a tombben 5-os? Felelet: ');
+  if van then
+    writeln('igen.')
+  else
+    writeln('nem.');
+  readln;
+end.
+</code>
+
+[[https://ideone.com/uED04r | Az <eldontes_vane.pas> forráskódjának futtatása online ]]
+
+
+Minden eleme megfelel-e a tömbnek a megadott feltételnek?
+
+<code pascal eldontes_minde.pas>
+program eldontes_minde;
+const n = 10;
+var a:array [1..n] of integer;
+    i: integer;
+    igaz: boolean;
+begin
+  randomize;
+  //a tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(10);
+    write(a[i], ' ');
+  end;
+  writeln;
+  //minden eleme 1-nél nagyobb-e?
+  i:=1;
+  while (i<=n) and (a[i]>1) do
+    i:=i+1;
+  igaz:= i>n;
+  write('Minden eleme 1-nel nagyobb-e? Felelet: ');
+  if igaz then
+    writeln('igen.')
+  else
+    writeln('nem.');
+  readln;
+end.
+
+</code>
+
+
+[[https://ideone.com/xvYIUq | Az <eldontes_minde.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal eldontes_van_e.pas>
+program eldontes_van_e;
+const n=8;
+var i : integer; van : boolean;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  i:=1;
+  while (i<=n) and (a[i]<>5) do //a T tulajdonsag: a tombben van-e 5-os
+    inc(i); //i:=i+1;
+  van:=i<=n;
+  if van then write('Van 5-os') else write('Nincs 5-os');
+  readln;
+end.
+</code>
+
+<code pascal eldontes_mind_e.pas>
+program eldontes_mind_e;
+const n=8;
+var i : integer; van : boolean;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  i:=1;
+  while (i<=n) and (a[i]>5) do //a T tulajdonsag: a tombben minden elem nagyobb 5-nel
+    inc(i); //i:=i+1;
+  van:=i>n;
+  if van then write('Minden elem nagyobb 5-nel') else write('Nem az osszes elem nagyobb 5-nel');
+  readln;
+end.
+
+</code>
+

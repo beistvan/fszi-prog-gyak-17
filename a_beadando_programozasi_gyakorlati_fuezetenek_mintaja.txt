@@ -1,0 +1,90 @@
+===== A beadandó programozási gyakorlati füzetének mintája =====
+
+**I.	Elméleti ismeretek** \\
+
+A sin() függvény a Pascal/C/C++/C# beépített matematikai függvénye.
+
+**II.	Programozási feladat** \\
+
+Készítsen egy programot, amely kiszámolja a sin(x) függvény értékét a PI/2 pontban! A bemenetet billentyűzetről, az eredményt a konzolra írassa ki!
+
+**III.	A megoldás forráskódja** \\
+
+**Pascal** \\
+{{:inf-prog-fszi:sinpi2pas.jpg?nolink|}} \\
+
+<code pascal sinpi2.pas>
+program sinpi2;
+begin
+  Write('Sin(PI/2) = ',sin(PI/2):2:2);
+  Readln;
+end.
+</code>
+
+**C** \\
+{{:inf-prog-fszi:sinpi2c.jpg?nolink|}} \\
+
+<code c sinpi2.c>
+#include <stdio.h>
+#include <math.h>
+int main()
+{
+    printf("Sin(PI/2) = ");
+    printf("%2.2f",sin(M_PI_2));
+    return 0;
+}
+
+</code>
+
+**C++** \\
+{{:inf-prog-fszi:sinpi2cpp.jpg?nolink|}} \\
+
+<code cpp sinpi2.cpp>
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+    cout << "Sin(PI/2) = ";
+    cout << trunc(100 * sin(atan(1.0)*2) / 100);
+    return 0;
+}
+
+</code>
+
+
+**C#** \\
+{{:inf-prog-fszi:sinpi2cs.jpg?nolink|}} \\
+
+<code csharp sippi2.cs>
+using System;
+
+namespace sinpi2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(Math.Sin(Math.PI / 2));
+            Console.ReadLine();
+        }
+    }
+}
+
+
+</code>
+
+
+**IV.	Folyamatábra** \\
+{{:inf-prog-fszi:sinpi2folyabra.jpg?nolink|Folyamatábra}} \\
+
+
+**V.	Tesztadatok** (bemeneti/kimeneti adatok)
+\\ Bemenet: PI/2  
+\\ Kimenet: 1
+
+**VI.	Excel ellenőrzés** \\
+{{:inf-prog-fszi:sinpi2exc1.jpg?nolink|}} \\
+
+{{:inf-prog-fszi:sinpi2exc2.jpg?nolink|}} \\ 

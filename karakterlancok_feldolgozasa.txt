@@ -1,0 +1,146 @@
+====== Karakterláncok feldolgozása ======
+
+===== Szöveges adattípusok =====
+
+
+<code pascal szoveges_tipus.pas>
+var 
+    karakter : char; 
+    karakterlanc : string;
+</code>
+
+===== Karakterláncok =====
+
+A ''string'' karakterláncok alap esetben 255 karakter hosszúságúak. 
+
+A karakterláncok hossza korlátozható.
+
+<code pascal karakterlanc_hossza.pas>
+var 
+  nev        : string[25]; 
+  postai_cim : string[40];
+</code>
+
+===== Értékadás szöveges adatoknál =====
+
+<code pascal szovegek_ertekadas.pas>
+    karakter := 'A';         {értékadás char típusnál} 
+    ch := '+'; 
+    nev := 'Kelep Elek';     {értékadás string típusnál} 
+    postai_cim :='90262, Beregszász, Kossuth tér 6.'; 
+    karakter := postai_cim[1];  {hivatkozás a string elemére,
+                                 a karakter értéke 
+                                 a '9' karakter lesz} 
+</code>
+
+===== Karakterláncok összefűzése =====
+
+A karakterláncok összefűzése a ''+'' operátorral történik.
+
+<code pascal karakterlanc_osszefuzes.pas>
+program karakterlanc_osszefuzes;
+var 
+  szoveg1, szoveg2, szoveg: string;
+begin 
+    szoveg1 :='Rákóczi'; 
+    szoveg2 :=' Ferenc'; 
+    szoveg := ' II. ' + szoveg1 + szoveg2; 
+end.
+</code>
+
+===== Karakterláncokat feldolgozó függvények =====
+
+^  Formátum  ^  Leírás  ^
+|  ''Concat(s1, s2, …)''  |Összekapcsolja ''s1'', ''s2'', … stb. szöveges változókat.  |
+|  ''Copy(s, i, n)''  |Az ''s'' karakterlánc ''i''-edik karakterétől számítva ''n'' darab karaktert ad vissza.  |
+|  ''Delete(s, i, n)''  |Az ''s'' karakterlánc ''i''-edik karakterétől számítva ''n'' darab karaktert töröl.|  
+|  ''Insert(s1, s2, i)''  |Az ''s1'' karakterláncot beszúrja ''s2''-be, az ''s2'' ''i''-edik karakterétől kezdve.  |
+|  ''Length(s)''  |Az ''s'' karakterlánc hosszát adja meg.  |
+|  ''Pos(s1, s2)''  |Az ''s1'' karakterláncot keresi ''s2''-ben, és annak kezdő pozíciójával tér vissza.  |
+|  ''Str(x, s)''  |Az ''x'' egész típusú kifejezés értékét konvertálja az ''s'' stringbe.  |
+|  ''Val(s, x, i)''  |Az ''s'' karakterláncot konvertálja az ''x'' numerikus típusba.  |
+|  ''UpCase(ch)''  |A ''ch'' kisbetűs karaktert nagybetűssé alakítja.   |
+
+
+    
+Itt használhatók még ''pred(ch)'', ''succ(ch)'', ''ord(ch)'', ''chr(i)'' függvények is.
+
+<code pascal szovegek.pas>
+program szovegek;
+var kod,c1,kod2,ch: char;
+    cim: string;
+    nev: string[25];
+    lakcim : string[40];
+    s1,s2,szoveg: string;
+    x,i:integer;
+begin
+    {karakterek deklarációja}
+    kod:='A';                {értékadás char típusnál}
+    c1:='+';
+    {szöveges (karakterlánc) adattípus deklarálása}
+    nev:='Aranyos Imre';     {értékadás string típusnál}
+    lakcim:='Dunaújváros';
+    kod2:=lakcim[1];         {hivatkozás string elemére, a kod2 értéke
+                              a 'D' betű lesz} 
+    writeln('kod=',kod,' c1=',c1,' nev=',nev,' lakcim=',lakcim,' kod2=',kod2);
+    {szövegegyesítés}
+    s1:='Repul';
+    s2:=' a nehez ko...';
+    szoveg:=s1+s2+' (Arany Janos)';
+    writeln('s1=',s1,' s2=',s2,' szoveg=',szoveg);
+    {szövegegyesítés}
+    szoveg:=concat(s1,s2);
+    writeln('szoveg=',szoveg);
+    {szövegrész kimásolása}
+    szoveg:=copy(s2,4,5);
+    writeln('szoveg=',szoveg);
+    {szövegrész törlése}
+    delete(szoveg,1,3);
+    writeln('szoveg=',szoveg);
+    {szöveg beillesztése}
+    insert('res',szoveg,2);
+    writeln('szoveg=',szoveg);
+    {a szöveg hossza}
+    x:=length(szoveg);
+    writeln('szoveg hossza, x=',x);
+    {szövegrészlet pozíciójának megállapítása}
+    x:=pos('nehez',s2);
+    writeln('a nehez pozicioja az s2-ben, x=',x);
+    {szám átalakítása szöveggé}
+    x:=25;
+    str(x,s1);
+    writeln('az s1, mint szoveg az = ',s1,', s1+''2'' = ',s1+'2');
+    {szöveg átalakítása számmá}
+    s1:='25';
+    val(s1,x,i);
+    writeln('az x, mint szam az = ',x,', x+2 = ',x+2);
+    {egy karakter átalakítása nagybetűssé}
+    ch:='d';
+    writeln('kezdetben a ch = ',ch);
+    ch:=upcase(ch);
+    writeln('atalakitva nagybetusse a ch = ',ch);
+    {a következő karakter}
+    ch:='d';
+    writeln('kezdetben a ch = ',ch);
+    ch:=succ(ch);
+    writeln('a ch-t koveto karakter az = ',ch);
+    {az előző karakter}
+    ch:='d';
+    writeln('kezdetben a ch = ',ch);
+    ch:=pred(ch);
+    writeln('a ch-t megelozo karakter az = ',ch);
+    {a karakter kódja}
+    x:=ord(ch);
+    writeln('a ',ch,' kodja az x=',x);
+    {a megadott kódú karakter meghatározása}
+    x:=97;
+    ch:=chr(x);
+    writeln('a ',x,' kodu karakter az ch=',ch);
+    writeln('<tab>',#9,'<tab>',#10,#13,'<enter>');
+    writeln('a hexadecimalis 45 tizesben sz ',$45,
+            ' a hexa 45 kodu karakter az ',#$45);
+    readln;
+end.
+</code>
+
+[[https://ideone.com/rJWQ9R | A <szovegek.pas> forráskódjának futtatása online ]]

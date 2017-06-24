@@ -1,0 +1,49 @@
+====== Backtrack - visszalépéses keresés ======
+
+
+**Feladat**: Adott N sorozat, amelyek rendre M(1), M(2), … elemszámúak. Ki kell választani mindegyikből egy-egy elemet úgy, hogy egyes sorozatokból való választások másokat befolyásolnak. A megoldást úgy kell elkészíteni, hogy ne kelljen az összes lehetőséget végignézni.
+
+Először megpróbálunk az első sorozatból választani egy elemet, ezután a következőből, s ezt mindaddig csináljuk, amíg a választás lehetséges. X(I) jelöli az I. sorozat kiválasztott eleme sorszámát, ha még nem választottunk, akkor az értéke 0.
+
+Ha nincs jó választás, akkor visszalépünk az előző sorozathoz, s megpróbálunk abból egy másik elemet választani. Ez az egész eljárás vagy úgy ér véget, hogy minden sorozatból sikerült választani, vagy pedig úgy, hogy a visszalépések sokasága után már az első sorozatból sem lehet újabb elemet választani.
+
+<code bash visszalepes1.txt>
+Eljárás:
+	I:=1
+	Ciklus amíg I>=1 és I<=N
+		Ha VAN_JÓ_ESET(I) akkor I:=I+1
+			X(I):=0
+		különben I:=I-1
+	Ciklus vége
+	VAN:=I>N
+Eljárás vége.
+</code>
+
+Az I. sorozatból úgy választunk elemet, hogy próbálunk mindaddig új elemet venni, amíg egyáltalán van további elem, és az éppen vizsgált nem felel meg a feladatnak. 
+
+Ha a keresgélés közben a sorozat elemei nem fogytak el, akkor az előző szintnek válaszolhatjuk azt, hogy sikeres volt a választás. 
+
+Ha pedig az utolsó sem felelt meg, akkor azt, hogy vissza kell lépni az előző sorozathoz.
+
+<code bash visszalepes2.txt>
+VAN_JÓ_ESET(I):
+	Ciklus
+		X(I):=X(I)+1
+		amíg X(I)<=M(I) és ROSSZ_ESET(I, X(I))
+	Ciklus vége
+	VAN_JÓ_ESET:=X(I)<=M(I)
+Eljárás vége.
+</code>
+
+Rossz választásnak nevezzük azt, amelyet a korábbi választások közül valamelyik megakadályoz.
+
+<code bash visszalepes3.txt>
+ROSSZ_ESET(I, X(I)):
+	J:=1
+	Ciklus amíg J < I és (J,X(J)) nem zárja ki (I,X(I))-t
+		J:=J+1
+	Ciklus vége
+	ROSSZ_ESET:=J < I
+Eljárás vége.
+</code>
+

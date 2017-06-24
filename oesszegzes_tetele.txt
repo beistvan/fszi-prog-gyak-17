@@ -1,0 +1,54 @@
+====== Összegzés tétele ======
+
+
+Adott egy N elemű számsorozat: A(N). Számoljuk ki az elemek összegét!
+
+<code bash osszeg.txt>
+Eljárás:
+    S := 0
+    Ciklus I = 1-től N-ig
+        S := S + A(I)
+    Ciklus vége
+Eljárás vége.
+</code>
+
+Pascal forráskód
+
+<code pascal osszeg.pas>
+program osszeg;
+var a:array [1..10] of integer;
+    i,sum:integer;
+begin
+  sum:=0;
+  for i:=1 to 10 do
+  begin
+    a[i]:=random(30);
+    writeln('a[',i,']= ',a[i]);
+    sum:=sum+a[i];
+  end;
+  writeln('osszeg = ',sum);
+  readln;
+end.
+</code>
+
+[[https://ideone.com/jzjAOo | Az <osszeg.pas> forráskódjának futtatása online ]]
+
+
+Órai gyakorlat
+<code pascal osszegzes.pas>
+program osszegzes;
+const n=8;
+var i, s: integer;
+    a: array [1..n] of integer;
+begin
+  s:=0;
+  for i:= 1 to n do
+  begin
+    write(' a[',i,']='); readln(a[i]);
+    s:=s+a[i];
+  end;
+  writeln('A tomb elemeinek osszege: ',s);
+  readln;
+end.
+
+</code>

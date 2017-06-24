@@ -1,0 +1,240 @@
+Eljárások és függvények. Modulok és külső egységek.
+
+===== Paraméterek / Argumentumok =====
+
+<code pascal eljaras.txt>
+eljárás(formális_paraméter_lista) 
+
+függvény(formális_paraméter_lista) : visszatérési_típus
+
+formális_paraméter_lista ---> paraméter_csoport_1; ... ; paraméter_csoport_n
+
+//érték szerinti paraméterátadási mód
+paraméter_csoport ---> azonosító_1, ... , azonosító_n : adattípus
+
+//hivatkozás szerinti paraméterátadási mód
+var paraméter_csoport ---> azonosító_1, ... , azonosító_n : adattípus
+</code>
+
+===== Láthatóság =====
+
+Megkülönböztetünk **globális** és **lokális** láthatóságot.
+
+{{:inf-prog-fszi:scope.gif?nolink|}}
+
+  * Az **A**, **B** és **C** **globális** változók látszanak mindenünnen
+  * Az **Alpha** eljárásban az **A** **globális** deklarációját a **lokális** deklaráció váltja fel
+  * A **Beta1** és a **Beta2** láthatják a **VCR**, **Betamax** és **cassette** változókat
+  * A **Beta1** nem látja a **FailureToo**, továbbá a **Beta2** nem látja a **Failure** deklarációját
+  * Az **Alpha**-n kívül egyik alprogram sem láthatja az **F** és a **G** deklarációit 
+  * A **Beta** eljárás meghívhatja az **Alpha** és a **Beta** eljárásokat
+  * A **Beta2** függvény az összes alprogramot meghívhatja, beleértve saját magát is (a fő program nem alprogram).
+
+Forrás: freepascal.org
+
+===== Eljárások =====
+
+<code pascal eljaras.txt>
+procedure eljarasnev (parameterek); 
+{deklarációk} 
+begin 
+    {eljárástörzs} 
+end;
+
+</code>
+
+===== Függvények =====
+
+<code pascal függveny.txt>
+function fuggvenynev (parameterek) : fuggvény_típusa; 
+{deklarációk} 
+begin 
+    {függvénytörzs} 
+    fuggvenynev := utasitas; {függvény eredménye} 
+end;
+</code>
+
+Függvény meghívása kifejezésben
+
+<code pascal függvenyhivas.txt>
+valtozo := fuggvenynev(parameterek);
+</code>
+
+===== Egységek / Unitok =====
+
+Az egységek/unitok deklarálásának alapvető formátuma:
+
+<code pascal unit_deklaralasa.txt>
+unit unit_nev;
+interface
+	(* a unit publikusan hozzáférhető alprogramjai *)
+implementation
+	(* az alprogramok megvalósítása, és, ha kell, akkor  *)
+	(* csak a unit számára látható deklazációk *)
+end.
+</code>
+
+Teljesebb formátuma az egységek/unitok deklarálásának:
+
+<code pascal unit_bovitett.txt>
+unit unit_nev;
+interface
+ 
+implementation
+ 
+initialization
+	(* az inicializáló kódokat *)
+	(* tartalmazó rész, amik   *)
+	(* a unit betöltésekor  *)
+	(* futnak le *)
+ 
+finalization
+	(* a program futásának *)
+	(* befejezésekor lefutó *)
+	(* kódok *) 
+end.
+</code>
+
+Példa
+
+A főprogram
+
+<code pascal egysegek.pas>
+program egysegek;
+uses progkonyvtar;
+
+var a:tomb;
+begin
+  feltolt(a,n);
+  kiir(a,n);
+  readln;
+end.
+</code>
+
+A programkönyvtár megvalósítva unitként.
+
+<code pascal progkonyvtar.pas>
+unit progkonyvtar;
+interface
+  const n=10;
+  type tomb=array[1..n]of integer;
+
+  procedure kiir(t:tomb; hossz:byte);
+  procedure feltolt(var t:tomb; hossz:byte);
+
+implementation
+procedure kiir(t:tomb; hossz:byte);
+var i:integer;
+begin
+  for i:=1 to hossz do
+    write(t[i]:3);
+  writeln;
+end;
+
+procedure feltolt(var t:tomb; hossz:byte);
+var i:integer;
+begin
+  randomize;
+  for i:=1 to hossz do
+    t[i]:=random(89)+10;
+end;
+
+begin
+
+end.
+</code>
+
+
+===== Előre definiálás =====
+
+Előre definiálni a ''forvard'' paranccsal tudunk.
+
+<code pascal forvard.txt>
+procedure Később (paraméter lista); forward;
+ 
+procedure Hamarabb (paraméter lista);
+begin
+  ...
+  Később (paraméter lista);
+end;
+...
+procedure Később;
+begin
+  ...
+  Hamarabb (paraméter lista);
+end;
+</code>
+
+===== A tomb_io.pas könyvtár =====
+
+<code pascal tomb_io.pas>
+unit tomb_io;
+interface
+  type tomb=array [1..20]of integer;
+  procedure beolvas(var t : tomb; var hossz: byte; nev: char );
+  procedure kiir(t : tomb; hossz: byte; nev: string );
+  function talal(t:tomb; hossz: byte; elem:integer):boolean;
+implementation
+
+procedure beolvas(var t : tomb; var hossz: byte; nev: char );
+var i: integer;
+begin
+  write('A(z) "', nev, '" tomb hossza: ');readln(hossz);
+  writeln('Kerem a(z) "', nev, '" tomb elemeit: ');
+  for i:=1 to hossz do
+  begin
+    write(nev, '[',i,'] = '); readln(t[i]);
+  end;
+end;
+
+procedure kiir(t : tomb;  hossz: byte; nev: string );
+var i: integer;
+begin
+  write(nev+': ');
+  for i:=1 to hossz do
+    write(t[i]:3);
+  writeln;
+end;
+
+function talal(t: tomb; hossz: byte; elem:integer):boolean;
+var i:integer;
+begin
+  i:=1;
+  while (i<=hossz) and (t[i] <> elem) do
+    i:=i+1;
+  talal:=i<=hossz;
+end;
+begin
+
+end.
+</code>
+
+===== A tomb_rend.pas könyvtár =====
+
+<code pascal tomb_rend.pas>
+unit tomb_rend;
+interface
+uses tomb_io;
+procedure minimum_rendezes(var a:tomb; hossz:byte);
+
+implementation
+procedure minimum_rendezes(var a:tomb; hossz:byte);
+var i,j, index, ertek : integer;
+begin
+  for i:=1 to hossz-1 do
+  begin
+    index:=i;
+    ertek:=a[i];
+    for j:=i+1 to hossz do
+      if a[j]<ertek then
+      begin
+        ertek:=a[j];
+        index:=j;
+      end;
+    a[index]:=a[i];
+    a[i]:=ertek;
+  end;
+end;
+
+end.
+</code>

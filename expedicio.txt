@@ -1,0 +1,124 @@
+
+====== Expedíció ======
+
+<code pascal expedicio.pas>
+program expedicio;
+const n = 160;
+type adas = record
+       hetnapja: byte;
+       ado: byte;
+       uzenet: string[90];
+     end;
+var a:array[1..n] of adas;
+    h:array[1..11] of byte;
+    u:array[1..11] of string[90];
+    adb, i, j, hetnapja, radioamator, kif_db, koly_db:integer;
+    uzenet:string[90]; kifejlett, kolykok: string[3];
+    t: text;
+function szame(szo:string):boolean;
+var valasz:boolean;
+begin
+  valasz:=true;
+  for i:=1 to length(szo) do
+    if (szo[i]<'0') or (szo[i]>'9') then valasz:=false;
+  szame:=valasz;
+end;
+begin
+  //1. feladat
+  writeln('1.feladat');
+  assign(t, 'veetel.txt');
+  {$I-}
+  reset(t);
+  if IOResult<>0 then begin writeln('hiba: ',IOResult);readln;halt(1);end;
+  {$I+}
+  i:=1;
+  while not eof(t) do begin
+    with a[i] do begin
+      readln(t, hetnapja, ado);
+      readln(t, uzenet);
+      //writeln('hetnapja = ',hetnapja,', ado = ', ado, ', uzenet = ', uzenet);
+    end;
+    inc(i);
+  end;
+  adb:=i-1;
+  writeln('beolv.rek.sz.: adb=',adb);
+  close(t);
+  //2. feladat
+  writeln('2.feladat');
+  writeln('elso= ',a[1].ado, ', utolso= ',a[adb].ado);
+   //3. feladat
+  writeln('3.feladat');
+  for i:=1 to adb do
+    if pos('farkas',a[i].uzenet)>0 then
+      writeln(a[i].hetnapja,',  ',a[i].ado);
+  writeln;
+   //4. feladat
+  writeln('4.feladat');
+  for i:=1 to adb do
+    inc(h[a[i].hetnapja]);
+  for i:=1 to 11 do
+    write(h[i],' ');
+  writeln;
+   //5. feladat
+  writeln('5.feladat');
+  for i:=1 to 11 do
+    u[i]:='';  //length = 0
+  for i:=1 to adb do
+  begin                                //u[a[...=''
+    if length(u[a[i].hetnapja])=0 then //az elso uzenet bele van e toltve az uba
+       u[a[i].hetnapja]:=a[i].uzenet
+    else
+    begin
+      for j:=1 to 90 do
+      begin
+        if a[i].uzenet[j]<>'#' then
+        begin
+           u[a[i].hetnapja][j]:=a[i].uzenet[j];
+        end; {if}
+      end;{for}
+
+    end;{else}
+
+  end; {for}
+
+  for i:=1 to 11 do
+    writeln(i:2,'. ',u[i]);
+  //6. feladat
+  writeln('6.feladat');
+  writeln('A "szame" fuggveny megvalositasa');
+  //7. feladat
+  writeln('7.feladat'); // 2, 3 -al 1/0 - egyedek szama: 1; 3, 3 - 5 egyed
+  write('Het napja: '); readln(hetnapja);
+  write('Radioamator: '); readln(radioamator);
+  uzenet:='';
+  for i:=1 to adb do
+  begin
+    if (a[i].hetnapja=hetnapja)and(a[i].ado=radioamator) then
+    begin
+      uzenet:=a[i].uzenet;
+      break;
+    end;
+  end;
+  if uzenet = '' then
+    writeln('Nincs ilyen feljegyzes.')
+  else
+  begin
+    writeln('Uzenet: ',uzenet);
+    kifejlett:=copy(uzenet,1,pos('/',uzenet)-1);
+    //writeln('pos: ',pos('/',uzenet));
+    writeln('kifejlett: ',kifejlett);
+    kolykok:=copy(uzenet,pos('/',uzenet)+1,pos(' ',uzenet)-pos('/',uzenet)-1);
+    writeln('kolykok: ',kolykok);
+    if (szame(kifejlett) and szame(kolykok)) then
+    begin
+      val(kifejlett,kif_db,i);
+      val(kolykok,koly_db,i);
+      writeln('A megfigyelt egyedek szama: ',kif_db+koly_db);
+    end
+    else
+      writeln('Nincs informacio.');
+    //writeln(szame('0'));
+  end;
+  readln;
+end.
+</code>

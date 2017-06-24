@@ -1,0 +1,10 @@
+====== Programozási gyakorlat, FSZI, 2017. ======
+
+  - **[[Programozási gyakorlat témakörei]]**
+  - **[[Programozási gyakorlat gyakorlófeladatai]]**
+  - **[[A programozási gyakorlat szerkezete|A programozási gyakorlat sikeres teljesítéséhez szükséges beadandó anyag szerkezete]]**
+  - **[[A beadandó programozási gyakorlati füzetének mintája]]**
+  - **[[Emelt szintű érettségi programozási feladatok]]**
+  - **[[Programozási tételek]]**
+  - **[[Hivatkozások]]**
+

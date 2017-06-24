@@ -1,0 +1,100 @@
+====== Céllövészet ======
+
+<code pascal celloveszet.pas>
+program celloveszet;   {2014.maj.ang.}
+var i,n,j,k,max,be,db,maxi:integer;
+    t:text;
+    sor:string[40];
+    lov:array[1..100] of string[40];
+//4.feladathoz
+function loertek(sor:string):integer;
+var aktpont,ertek,i:integer;
+begin
+  aktpont:=20;
+  ertek:=0;
+  for i:=1 to length(sor) do
+    if (aktpont>0)and(sor[i]='-') then
+      aktpont:=aktpont-1
+    else
+      ertek:=ertek+aktpont;
+  loertek:=ertek;
+end;
+
+begin
+writeln('1.feladat');
+  assign(t,'verseny.txt');
+  reset(t);
+  readln(t,n);
+  i:=1;
+  while not eof(t) do
+  begin
+    readln(t,lov[i]);
+    inc(i);
+  end;
+  close(t);
+  //n:=i-1;
+  writeln('az allomanybol beolvastam ',n,' sort');
+  //for i:=1 to n do
+  //  writeln(lov[i]);
+writeln('2.feladat');
+  for i:=1 to n do
+  begin
+      // hol van az elso +
+      k:=1;
+    while (k<=length(lov[i]))do begin
+      while (k<=length(lov[i]))and(lov[i][k]<>'+')do
+        inc(k);
+      if k<=length(lov[i]) then
+      begin
+      //megszamoljuk hogy hany + van egymas utan
+        inc(k);
+        j:=1;
+        while (k<=length(lov[i]))and(lov[i][k]='+')do
+        begin
+          inc(k);
+          inc(j);
+        end;
+        if j>=2 then writeln(i,'. ',j,' db',' a ',k-j,'-tol');
+      end;
+    end;
+  end;
+writeln('3.feladat');
+  max:=length(lov[1]);
+  for i:=1 to n do
+    if max<length(lov[i]) then
+    begin
+      max:=length(lov[i]);
+      j:=i;
+    end;
+  writeln(j,'.  ',max);
+writeln('4.feladat');
+  writeln('pl. 12.: ',loertek(lov[12]));
+  writeln('pl. 3.: ',loertek(lov[3]));
+writeln('5.feladat');
+  write('adjon meg egy versenyzosorszamot ');
+  readln(be);
+  writeln('5.a)');
+  for i:=1 to length(lov[be])do
+    if lov[be][i]='+' then write(i,' ');
+  writeln;
+  db:=0;
+  writeln('5.b)');
+  for i:=1 to length(lov[be])do
+    if lov[be][i]='+' then inc(db);
+  writeln(db,' szer talalta el');
+  writeln('5.c)');
+  for i:=length(lov[be]) downto 2  do
+  begin
+    sor:='';
+    for j:=1 to i do
+      sor:=sor+'+';
+    //writeln(sor,' ' ,length(sor));
+    //writeln(i, '. ',pos(sor,lov[be]));
+    if pos(sor,lov[be])>0 then begin maxi:=i; break; end;
+  end;
+  writeln('leghosszabb hibatlan soroszat ',maxi);
+  writeln('5.d)');
+  writeln('elerte pontok ',loertek(lov[be]));
+readln;
+end.
+</code>

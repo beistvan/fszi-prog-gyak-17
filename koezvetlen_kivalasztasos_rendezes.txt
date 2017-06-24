@@ -1,0 +1,92 @@
+====== Közvetlen kiválasztásos rendezés ======
+
+**Módszer lényege**:
+Rendezendő számok az A vektor elemei.
+Első menetben az A(1)-et összehasonlítjuk az összes elemmel és ha kisebbet találunk nála, akkor felcseréljük.
+Így az első menet végére a legkisebb elem lesz az első helyen.
+Ezután ezt ismételjük az A(2)-es elemmel, stb.
+N-1 menet után rendezett lesz a sorozat.
+
+<code bash kivalasztasos.txt>
+Eljárás:
+	Ciklus I=1-től N-1-ig
+		Ciklus J=I+1-től N-ig
+			Ha A(J) < A(I) akkor C:=A(J)
+			A(J):=A(I)
+			A(I):=C
+		Ciklus vége
+	Ciklus vége
+Eljárás vége.
+</code>
+
+DEMO
+
+Hatékonysági mutatók \\
+**Tárigény**: N+1 \\
+**Összehasonlítások száma**: N*(N-1)/2  \\
+**Mozgatások száma**: 0-tól 3*N*(N-1)/2-ig lehetséges \\
+**Végrehajtási idő**: 2980 s (N=500)
+
+
+
+Pascal forráskód
+
+<code pascal rendezes_kivalasztassal.pas>
+program rendezes_kivalasztassal;
+const n = 10;
+var a: array [1..n] of integer;
+    i, j, c: integer;
+begin
+  randomize;
+  //A tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(55);
+    write(a[i], ' ');
+  end;
+  Writeln;
+  //Tömb rendezése közvetlen kiválasztással
+  for i:=1 to n-1 do
+    for j:=i+1 to n do
+      if a[j]<a[i] then begin
+        c:=a[j];
+        a[j]:=a[i];
+        a[i]:=c;
+      end;
+
+  writeln('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i], ' ');
+  readln;
+end.
+</code>
+
+[[https://ideone.com/MFjEp1 | A <rendezes_kivalasztassal.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal kivalasztasos_rendezes.pas>
+program kivalasztasos_rendezes;
+const n=8;
+var i,j, cs : integer;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  for i:=1 to n-1 do
+    for j:=i+1 to n do
+      if a[j]<a[i] then
+      begin
+        cs:=a[j];
+        a[j]:=a[i];
+        a[i]:=cs;
+      end;
+  write('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i]:3);
+  readln;
+end.
+</code>

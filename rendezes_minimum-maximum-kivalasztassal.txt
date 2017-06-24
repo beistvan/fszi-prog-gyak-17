@@ -1,0 +1,104 @@
+====== Rendezés minimum- (maximum-) kiválasztással ======
+
+
+**Módszer lényege**: Felesleges cserék kiküszöbölése érdekében két segédváltozót vezetünk be (legkisebb elem értékének és indexének).
+
+<code bash minimumkiv.txt>
+Eljárás:
+	Ciklus I = 1-től N - 1-ig
+		INDEX := I
+		ÉRTÉK := A(I)
+		Ciklus J = I + 1-től N-ig
+			Ha A(J) < ÉRTÉK akkor ÉRTÉK := A(J)
+			INDEX := J
+		Ciklus vége
+		A(INDEX) := A(I)
+		A(I) := ÉRTÉK
+	Ciklus vége
+Eljárás vége.
+</code>
+
+DEMO
+
+Hatékonysági mutatók\\
+**Tárigény**: N+1 \\
+**Összehasonlítások száma**: N*(N-1)/2 \\
+**Mozgatások száma**: 3*(N-1)-től 3*(N-1)+(N*N/4)-ig lehetséges \\ 
+**Végrehajtási idő**: 1650 s (N=500)
+
+
+Pascal forráskód
+
+Rendezés minimum-kiválasztással.
+
+<code pascal rendezes_minimum_kivalasztassal.pas>
+program rendezes_minimum_kivalasztassal;
+const n = 10;
+var a: array [1..n] of integer;
+    i, j, min, ind: integer;
+begin
+  randomize;
+  //A tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(55);
+    write(a[i], ' ');
+  end;
+  Writeln;
+  //Tömb rendezése minimum-kiválasztással
+  for i:=1 to n-1 do
+  begin
+    ind:=i;
+    min:=a[i];
+    for j:=i+1 to n do
+      if a[j]<min then
+      begin
+        min:=a[j];
+        ind:=j;
+      end;
+    a[ind]:=a[i];
+    a[i]:=min;
+  end;
+
+  writeln('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i], ' ');
+  readln;
+end.
+
+</code>
+
+[[https://ideone.com/rQeTyn | A <rendezes_minimum_kivalasztassal.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal minimum_kereseses_rendezes.pas>
+program minimum_kereseses_rendezes;
+const n=8;
+var i,j, index, ertek : integer;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  for i:=1 to n-1 do
+  begin
+    index:=i;
+    ertek:=a[i];
+    for j:=i+1 to n do
+      if a[j]<ertek then
+      begin
+        ertek:=a[j];
+        index:=j;
+      end;
+    a[index]:=a[i];
+    a[i]:=ertek;
+  end;
+  write('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i]:3);
+  readln;
+end.
+</code>

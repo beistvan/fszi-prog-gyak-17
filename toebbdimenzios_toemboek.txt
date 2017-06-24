@@ -1,0 +1,30 @@
+====== Többdimenziós tömbök ======
+
+Formátum
+<code pascal tobbdimtomb.txt>
+type
+  típus_megnevezése = array [felsorolás_típus_1, felsorolás_típus_2] of adattípus;
+</code>
+
+Példa
+
+<code pascal tobbdimtomb1.pas>
+type
+  felsorolas_tipus_1 = 1..50;
+  felsorolas_tipus_2 = 3..62;
+  tomb_tipus = array [felsorolas_tipus_1, felsorolas_tipus_2] of integer;
+</code>
+
+<code pascal tobbdimtomb2.pas>
+type
+  statusz_tipus = (X, O, Ures);
+  tabla_tipus = array[1..3, 1..3] of statusz_tipus;
+var
+  tabla : tabla_tipus;
+  ciklusvaltozo_1, ciklusvaltozo_2 : integer;
+begin
+  for ciklusvaltozo_1 := 1 to 3 do
+    for ciklusvaltozo_2 := 1 to 3 do
+      tabla[ciklusvaltozo_1, ciklusvaltozo_2] := Ures;
+end;    
+</code>

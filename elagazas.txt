@@ -1,0 +1,86 @@
+====== Elágazás IF. Eldöntés CASE/SWITCH. Egymásba ágyazott feltételek ======
+
+===== Az elágazás: IF =====
+
+Az ''if/then'' (ha/akkor) feltételes utasítás
+
+<code pascal ha.txt>
+if logikai_kifejezés then
+  utasítások_ha_igaz;
+</code>
+
+Az ''if/then'' utasítás blokkok használatával
+
+<code pascal hablokk.txt>
+if logikai_kifejezés then
+begin
+  utasítások_1;
+  utasítások_2
+end;
+</code>
+
+Az ''if/then/esle'' (ha/akkor/különben) feltételes utasítás
+
+<code pascal hakulonben.txt>
+if logikai_kifejezés then
+  utasítások_ha_igaz
+else
+  utasítások_ha_hamis;
+</code>
+
+Az ''if/then/esle'' utasítás blokkok használatával
+
+<code pascal hakulonbenblokk.txt>
+if logikai_kifejezés then
+begin
+  utasítások_1;
+  utasítások_2
+end
+else
+begin
+  utasítások_3;
+  utasítások_4
+end;
+</code>
+
+Példa
+
+<code pascal hakulonben.pas>
+if (b = 1) or (b = 7) or (b = 2037) or (b = 5) then
+  utasitas_1
+else
+  utasitas_2;
+</code>
+
+===== Egymásba ágyazott feltételek =====
+
+<code pascal hahakulonben.txt>
+if logikai_kifejezés_1 then
+  utasítások_ha_1_igaz
+else 
+  if logikai_kifejezés_2 then
+    utasítások_ha_2_igaz
+  else
+    utasítások_ha_2_hamis;
+</code>
+
+===== Az eldöntés: CASE =====
+
+<code pascal case.txt>
+case változó of
+  érték_1: utasítás_1; 
+  érték_2: utasítás_2; 
+   .. 
+  érték_n: utasítás_n; 
+  else utasítás_különben;
+end;
+</code>
+
+Példa
+
+<code pascal case.pas>
+case b of
+  1,7,2037,5: utasitas_1;
+  else        utasitas_2
+end;
+</code>

@@ -1,0 +1,38 @@
+===== Emelt szintű érettségi programozási feladatok =====
+
+  - feladat: {{:inf-prog-fszi:2017-maj-ma-tesztverseny.pdf|}} ; \\ forrás: {{:inf-prog-fszi:valaszok.doc|}} (txt) ; \\ megoldás: [[Tesztverseny|Tesztverseny]] ;\\ \\
+  - feladat: {{:inf-prog-fszi:2017-maj-an-furdo.pdf|}} ; \\ forrás: {{:inf-prog-fszi:furdoadat.doc|}} (txt) ; \\ megoldás: [[ Fürdő |Fürdő ]] ;\\ \\ 
+  - feladat: {{:inf-prog-fszi:2016-okt-ma-telefonos-ugyfelszolgalat.pdf|}} ; \\ forrás: {{:inf-prog-fszi:hivas.doc|}} (txt) ; \\ megoldás: [[ Telefonos ügyfélszolgálat|Telefonos ügyfélszolgálat]] ;\\  \\ 
+  - feladat: {{:inf-prog-fszi:2016-maj-ma-otszaz.pdf|}} ; \\ forrás: {{:inf-prog-fszi:penztar.doc|}} (txt); \\ megoldás: [[ Ötszáz|Ötszáz]] ; \\  \\ 
+  - feladat: {{:inf-prog-fszi:2016-maj-an-zar.pdf|}} ; \\ forrás: {{:inf-prog-fszi:ajto.doc|}} (txt); \\ megoldás: [[Zár|Zár]] ; \\  \\ 
+  - feladat: {{:inf-prog-fszi:2015-okt-ma-fej-vagy-iras.pdf|}} ; \\ forrás: {{:inf-prog-fszi:kiserlet.doc|}} (txt); \\ megoldás: [[ Fej vagy írás|Fej vagy írás]] ; \\ \\ 
+  - feladat: {{:inf-prog-fszi:2015-maj-ma-expedicio.pdf|}} ; \\ forrás: {{:inf-prog-fszi:veetel.doc|}} (txt); \\ megoldás: [[ Expedicio| Expedíció]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2015-maj-an-latin-tancok.pdf|}} ; \\ forrás: {{:inf-prog-fszi:tancrend.doc|}} (txt); \\ megoldás: [[ Latin táncok|Latin táncok]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2014-okt-ma-nezoter.pdf|}} ; \\ források: {{:inf-prog-fszi:kategoria.doc|}} (txt), {{:inf-prog-fszi:foglaltsag.doc|}} (txt); \\ megoldás: [[Nézőtér|Nézőtér]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2014-maj-an-ipv6.pdf|}} ; \\ forrás: {{:inf-prog-fszi:ip.doc|}} (txt); \\ megoldás: [[Ipv6 | Ipv6 ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2014-maj-ma-celloveszet.pdf|}} ; \\ forrás: {{:inf-prog-fszi:verseny.doc|}} (txt); \\ megoldás: [[Céllövészet | Céllövészet ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2013-okt-ma-kozuti-ellenorzes.pdf|}} \\ forrás: {{:inf-prog-fszi:jarmu.doc|}} (txt); \\ megoldás: [[Közúti ellenőrzés | Közúti ellenőrzés ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2013-maj-ma-valasztasok.pdf|}} ; \\ forrás: {{:inf-prog-fszi:szavazatok.doc|}} (txt); \\ megoldás: [[Választások |Választások ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2013-maj-an-szamok.pdf|}} ; \\ forrás: {{:inf-prog-fszi:felszam.doc|}} (txt); \\ megoldás: [[Számok | Számok ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2012-okt-ma-szin-kep.pdf|}} ; \\ forrás: {{:inf-prog-fszi:kep.doc|}} (txt); \\ megoldás: [[Szín-kép | Szín-kép ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2012-maj-ma-futar.pdf|}} ; \\ forrás: {{:inf-prog-fszi:tavok.doc|}} (txt); \\ megoldás: [[ Futár| Futár]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2012-maj-an-tortek.pdf|}} ; \\ forrás: {{:inf-prog-fszi:adat.doc|}} (txt); \\ megoldás: [[ Törtek| Törtek ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2011-okt-ma-pitypang.pdf|}} ; \\ források: {{:inf-prog-fszi:pitypang.doc|}} (txt), {{:inf-prog-fszi:honapok.doc|}} (txt); \\ megoldás: [[ Pitypang| Pitypang]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2011-maj-ma-szojatek.pdf|}} ; \\ forrás: {{:inf-prog-fszi:szoveg.doc|}} (txt); \\ megoldás: [[ Szójáték|Szójáték ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2011-maj-an-rejtveny.pdf|}} ; \\ források: {{:inf-prog-fszi:feladvany.doc|}} (txt), {{:inf-prog-fszi:megoldas.doc|}} (txt); \\ megoldás: [[ Rejtvény|Rejtvény ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2010-okt-ma-anagramma.pdf|}} ; \\ forrás: {{:inf-prog-fszi:szotar.doc|}} (txt); \\ megoldás: [[ Anagramma|Anagramma ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2010-maj-helyjegy.pdf|}} ; \\ forrás: {{:inf-prog-fszi:eladott.doc|}} (txt); \\ megoldás: [[Helyjegy |Helyjegy ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2010-maj-telek.pdf|}} ; \\ forrás: {{:inf-prog-fszi:telkek.doc|}} (txt); \\ megoldás: [[Telek |Telek ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2009-okt-ma-utepites.pdf|}} ; \\ forrás: {{:inf-prog-fszi:forgalom.doc|}} (txt); \\ megoldás: [[Útépítés |Útépítés ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2009-maj-ma-lift.pdf|}} ; \\ forrás: {{:inf-prog-fszi:igeny.doc|}} (txt); \\ megoldás: [[ Lift|Lift ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2009-maj-an-automata.pdf|}} ; \\ források: {{:inf-prog-fszi:vásárlás.doc|}} (txt), {{:inf-prog-fszi:csoki.doc|}} (txt); \\ megoldás: [[ Automata|Automata ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2008-okt-ma-robot.pdf|}} ; \\ forrás: {{:inf-prog-fszi:program.doc|}} (txt); \\ megoldás: [[Robot |Robot ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2008-maj-ma-sms.pdf|}} ; \\ forrás: {{:inf-prog-fszi:sms.doc|}} (txt); \\ megoldás: [[SMS |SMS ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2007-okt-ma-foci.pdf|}} ; \\ forrás: {{:inf-prog-fszi:meccs.doc|}} (txt); \\ megoldás: [[ Foci|Foci ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2007-okt-ma-sms-szavak.pdf|}} ; \\ forrás: {{:inf-prog-fszi:szavak.doc|}} (txt); \\ megoldás: [[ SMS szavak| SMS szavak ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2006-maj-ma-feherje.pdf|}} ; \\ forrás: {{:inf-prog-fszi:aminosav.doc|}} (txt); {{:inf-prog-fszi:bsa.doc|}} (txt);\\ megoldás: [[ Fehérje|Fehérje ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2006-okt-ma-zenei-adok.pdf|}} ; \\ forrás: {{:inf-prog-fszi:musor.doc|}} (txt); \\ megoldás: [[Zenei adók | Zenei adók ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2006-feb-ma-telefonszamla.pdf|}} ; \\ forrás: {{:inf-prog-fszi:hivasok.doc|}} (txt); \\ megoldás: [[Telefonszámla |Telefonszámla ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2005-okt-ma-vigenere-tabla.pdf|}} ; \\ forrás: {{:inf-prog-fszi:vtabla.doc|}} (dat); \\ megoldás: [[Vigenére tábla |Vigenére tábla ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2005-maj-ma-lotto.pdf|}} ; \\ forrás: {{:inf-prog-fszi:lottosz.doc|}} (dat); \\ megoldás: [[ Lottó|Lottó ]] ; \\ \\
+  - feladat: {{:inf-prog-fszi:2004-prob-szemelyazonosito-jel.pdf|}} ; \\ megoldás: [[Személyazonosító jel |Személyazonosító jel ]] ; \\ \\

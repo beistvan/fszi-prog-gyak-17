@@ -1,0 +1,61 @@
+====== Megszámlálás tétele ======
+
+
+Adott egy N elemű sorozat és egy - a sorozat elemein értelmezett - T tulajdonság. Feladat a T tulajdonsággal rendelkező elemek megszámolása.
+
+<code bash megszamlal.txt>
+Eljárás:
+	S := 0
+	Ciklus I = 1-től N-ig
+		Ha A(I) T tulajdonságú akkor S := S + 1
+	Ciklus vége
+Eljárás vége.
+</code>
+
+Pascal forráskód
+
+<code pascal megszamlalas.pas>
+program megszamlalas;
+const n = 10;
+var a:array [1..n] of integer;
+    i, db: integer;
+begin
+  randomize;
+  //a tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(8);
+    write(a[i], ' ');
+  end;
+  writeln;
+  //hány db 5-os van benne?
+  for i:=1 to n do
+    if a[i]=5 then
+      db:=db+1;
+  write( db, ' darab 5-os van a tombben.');
+  readln;
+end.
+</code>
+
+
+[[https://ideone.com/XXMbAJ | A <megszamlalas.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal megszamlalas.pas>
+program megszamlalas;
+const n=8;
+var i, s: integer;
+    a: array [1..n] of integer;
+begin
+  s:=0;
+  for i:= 1 to n do
+  begin
+    write(' a[',i,']='); readln(a[i]);
+    if a[i]=5 then s:=s+1;
+  end;
+  writeln('A tombben ',s,' darab 5-os van');
+  readln;
+end.
+
+</code>

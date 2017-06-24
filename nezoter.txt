@@ -1,0 +1,120 @@
+====== Nézőtér ======
+
+<code pascal nezoter.pas>
+program nezoter;
+const dbsor=15; dboszlop=20;
+type szek=record
+       foglalt:char;
+       kategoria:char;
+     end;
+var i,j,sor,oszlop,jegyszam,egyeduli:integer;
+    c, max_kategoria:char;
+    t1,t2,t3:text;
+    nezoter:array[1..dbsor,1..dboszlop]of szek;
+    egysor:string[20];
+    kategoria_db:array['1'..'5'] of byte;
+begin
+  //1.feladat
+  writeln('1.feladat');
+  assign(t1,'foglaltsag.txt');
+  reset(t1);
+  assign(t2,'kategoria.txt');
+  reset(t2);
+  for i:=1 to dbsor do
+  begin
+    readln(t1,egysor);
+    for j:=1 to dboszlop do
+    begin
+      nezoter[i,j].foglalt:=egysor[j];
+      write(nezoter[i,j].foglalt);
+    end;
+    readln(t2,egysor);
+    for j:=1 to dboszlop do
+    begin
+      nezoter[i,j].kategoria:=egysor[j];
+      write(nezoter[i,j].kategoria);
+    end;
+    writeln;
+  end;
+  close(t1);
+  close(t2);
+  //2.feladat
+  writeln('2.feladat');
+  write('sor= '); readln(sor);
+  write('oszlop= '); readln(oszlop);
+  if nezoter[sor,oszlop].foglalt='x' then
+    writeln('foglalt')
+  else writeln('szabad');
+  //3.feladat
+  writeln('3.feladat');
+  jegyszam:=0;
+  for i:=1 to dbsor do
+    for j:=1 to dboszlop do
+      if nezoter[i,j].foglalt='x' then
+        inc(jegyszam);
+  writeln('az eloadasra eddig ',jegyszam,' jegyet adtak el, ez a nezoter ',
+           round(jegyszam/300.0*100),'%-a.');
+  //4.feladat
+  writeln('4.feladat');
+  for c:='1' to '5' do
+    kategoria_db[c]:=0;
+  for i:=1 to dbsor do
+    for j:=1 to dboszlop do
+      if nezoter[i,j].foglalt='x' then
+        inc(kategoria_db[nezoter[i,j].kategoria]);
+  for c:='1' to '5' do
+    write(c,': ', kategoria_db[c],'; ');
+  max_kategoria:='1';
+  for c:='2' to '5' do
+    if kategoria_db[c]>kategoria_db[max_kategoria] then
+      max_kategoria:=c;
+  writeln;
+  writeln('A legtobb jegyet a(z) ',max_kategoria,'. artakategoriaban ertekesitettek.');
+  //5.feladat
+  writeln('5.feladat');
+  writeln('A szinhaz pillanatnyi bevetele ',
+           kategoria_db['1']*5000+
+           kategoria_db['2']*4000+
+           kategoria_db['3']*3000+
+           kategoria_db['4']*2000+
+           kategoria_db['5']*1500, ' Ft.'
+           );
+  //6.feladat
+  writeln('6.feladat');
+  for i:=1 to dbsor do
+  begin
+    if (nezoter[i,1].foglalt='o') and (nezoter[i,2].foglalt='x')then
+      inc(egyeduli);
+    for j:=2 to dboszlop-1 do
+      if (nezoter[i,j-1].foglalt='x')and
+         (nezoter[i,j].foglalt='o')and
+         (nezoter[i,j+1].foglalt='x')then
+        inc(egyeduli);
+
+    if (nezoter[i,dboszlop].foglalt='o') and (nezoter[i,dboszlop-1].foglalt='x')then
+      inc(egyeduli);
+  end;
+  writeln('Egyeduli helyek szama: ',egyeduli);
+  //7.feladat
+  writeln('7.feladat');
+  assign(t3,'szabad.txt');
+  rewrite(t3);
+  for i:=1 to dbsor do
+  begin
+    for j:=1 to dboszlop do
+      if nezoter[i,j].foglalt='o' then
+        write(t3,nezoter[i,j].kategoria)
+      else write(t3,'x');
+    writeln(t3);
+  end;
+  reset(t3);
+  while not eof(t3) do
+  begin
+    readln(t3,egysor);
+    writeln(egysor);
+  end;
+  close(t3);
+  readln;
+end.
+</code>
+

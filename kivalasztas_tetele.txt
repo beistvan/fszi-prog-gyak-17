@@ -1,0 +1,113 @@
+====== Kiválasztás tétele ======
+
+
+Adott egy N elemű sorozat, egy - a sorozat elemein értelmezett - T tulajdonság, és tudjuk, hogy a sorozatban van legalább egy T tulajdonságú elem. A feladat ezen elem sorszámának meghatározása.
+
+<code bash kivalasztas.txt>
+Eljárás:
+	I:=1
+	Ciklus amíg A(I) nem T tulajdonságú
+		I:=I+1
+	Ciklus vége
+	SORSZ:=I
+Eljárás vége
+</code>
+
+Pascal forráskód
+
+Az első elem kiválasztása a tömbből.
+
+<code pascal kivalasztas.pas>
+program kivalasztas;
+const n = 10;
+var a:array [1..n] of integer;
+    i, sorsz: integer;
+begin
+  randomize;
+  //a tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(8);
+    write(a[i], ' ');
+  end;
+  writeln;
+  //mi az 5-ös sorszáma?
+  i:=1;
+  while (i<=n) and (a[i]<>5) do
+    i:=i+1;
+  sorsz:= i;
+  write('Az 5-os elem sorszama: ',sorsz);
+  readln;
+end.
+</code>
+
+[[https://ideone.com/1Li1mg | A <kivalasztas.pas> forráskódjának futtatása online ]]
+
+Az utolsó elem kiválasztása a tömbből.
+
+<code pascal kivalasztas_utolso.pas>
+program kivalasztas_utolso;
+const n = 10;
+var a:array [1..n] of integer;
+    i, sorsz: integer;
+begin
+  randomize;
+  //a tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(8);
+    write(a[i], ' ');
+  end;
+  writeln;
+  //mi az utolsó 5-ös sorszáma?
+  for i:=1 to n do
+    if a[i]=5 then
+      sorsz:= i;
+  write('Az utolso 5-os elem sorszama: ', sorsz);
+  readln;
+end.
+</code>
+
+[[https://ideone.com/X9dDaw | A <kivalasztas_utolso.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal kivalasztas_elso.pas>
+program kivalasztas_elso;
+const n=8;
+var i, sorszam : integer;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  i:=1;
+  while a[i]<>5 do //a T tulajdonsag: a tomb egyik eleme egyenlõ 5-tel
+    inc(i); //i:=i+1;
+  sorszam:=i;
+  write('Az (elso) 5-os sorszama a tombben: ', sorszam);
+  readln;
+end.
+
+</code>
+
+<code pascal kivalasztas_utolso.pas>
+program kivalasztas_utolso;
+const n=8;
+var i, sorszam : integer;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  for i:=1 to n do //a T tulajdonsag: a tomb egyik eleme egyenlõ 5-tel
+    if a[i]=5 then sorszam:=i;
+  write('Az (utolso) 5-os sorszama a tombben: ', sorszam);
+  readln;
+end.
+
+</code>

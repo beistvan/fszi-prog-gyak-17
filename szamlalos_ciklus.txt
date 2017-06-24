@@ -1,0 +1,47 @@
+====== Ciklusok. Számlálós ciklus. For ======
+
+===== For-Do ciklus =====
+
+Formátum
+
+<code pascal for.txt>
+{növekményező ciklus}
+for ciklusváltozó := kezdőérték to végérték do 
+  {ciklusmag};
+
+{csökkentményező ciklus}
+for ciklusváltozó := kezdőérték downto végérték do 
+  {ciklusmag};
+</code>
+
+Példa
+
+<code pascal for.pas>
+osszeg := 0;
+for szamlalo := 1 to 10 do
+  osszeg := osszeg + szamlalo;
+</code>
+
+
+===== Break =====
+
+<code pascal forbreak.pas>
+var
+  i:integer;
+begin
+  for i := 0 to 10 do
+    if i = 5 then break;
+end;
+</code>
+
+
+===== Continue =====
+
+<code pascal forcontinue.pas>
+var
+  i:integer;
+begin
+  for i := 0 to 10 do
+    if i = 5 then coninue;
+end;
+</code>

@@ -1,0 +1,247 @@
+====== Fej vagy írás ======
+
+Megoldás fő adattároló tömb használata nélkül, ahogy az eredeti feladat kéri.
+
+<code pascal fejvagyiras_tomb_nelkul.pas>
+program fejvagyiras_tomb_nelkul;
+const m=1000;
+var
+  egymasutan,dobas,fej,
+  maxindex,max,ffff,fffi,
+  i,j,db,n:integer;
+  a:array [1..4*m] of char;
+  tipp,egydobas,dobott,d1,d2,d3,d4:char;
+  relativ: real;
+  f:text;
+begin
+  randomize;
+  writeln('1. feladat');
+  dobas:=random(2)+1;
+  if dobas=1 then
+  begin
+    egydobas:='I';
+    writeln(egydobas)
+  end
+  else
+  begin
+    egydobas:='F';
+    writeln(egydobas);
+  end;
+  writeln('2. feladat');
+  writeln('Irja be tippjet: '); readln(tipp);
+  dobott:=egydobas;
+  writeln('A tipp ',upcase(tipp),' a dobas ',dobott);
+  if upcase(tipp)=dobott then
+    writeln('Eltalalta!')
+  else
+    writeln('Nem talalta el!');
+  writeln('3. feladat');
+  Assign(f,'kiserlet.txt');
+  reset(f);
+  i:=0;
+  while not eof(f) do
+  begin
+    inc(i);
+    readln(f,tipp);
+  end;
+  n:=i;
+  writeln(n,' dobas tortent');
+  writeln('4. feladat');
+  fej:=0;
+  reset(f);
+  while not eof(f) do
+  begin
+    readln(f,tipp);
+    if tipp='F' then inc(fej);
+  end;
+  relativ:=(fej/n)*100;
+
+  writeln('fej relativ gyakorisaga: ',relativ:2:2,'%');
+  writeln('5. feladat');
+  egymasutan:=0;
+  reset(f);
+  readln(f,d1);
+  readln(f,d2);
+  readln(f,d3);
+  readln(f,d4);
+  if (d1='F') and (d2='F') and (d3='I') then inc(egymasutan);
+  //i:=1;
+  //if ((T[i]='F') and (T[i+1]='F') and (T[i+2]='I')) then inc(egymasutan);
+  for i:=1 to n-3 do
+  begin
+    d1:=d2; d2:=d3; d3:=d4; readln(f,d4);
+    if (d1='I') and (d2='F') and (d3='F') and (d4='I') then
+      inc(egymasutan);
+  end;
+  //i:=n-2;
+  if (d2='I') and (d3='F') and (d4='F') then inc(egymasutan);
+  writeln('2 fej ennyiszer talalhato egymas utan: ',egymasutan);
+  writeln('6. feladat');
+  max:=0;
+  maxindex:=0;
+  reset(f);
+  i:=0;
+  while not eof(f) do
+  begin
+    readln(f,tipp);
+    i:=i+1;
+    if tipp = 'F' then
+    begin
+      db:=1;
+      readln(f,tipp);
+      while not eof(f) and (tipp='F') do
+      begin
+        inc(db);
+        readln(f,tipp);
+      end;
+      if db>max then
+      begin
+        max:=db;
+        maxindex:=i;
+      end;
+      i:=i+db;
+    end;
+  end;
+  writeln('a leghosszabb tisztafej ',max,' elemu, ',maxindex,' -tol');
+  writeln('7. feladat');
+  for i:=1 to 4*m do
+  begin
+    if random(2)+1 > 1
+    then
+      a[i]:='F'
+    else
+      a[i]:='I';
+    write(a[i]);
+    if i mod 4 = 0 then write(' ');
+  end;
+
+    //4*i+1 i=0..m-1
+  ffff:=0;
+  fffi:=0;
+  for i:=0 to m-1 do
+  begin
+    j:=4*i+1;
+    if ((a[j]='F') and (a[j+1]='F') and (a[j+2]='F') and (a[j+3]='F')) then
+      inc(ffff);
+    if ((a[j]='F') and (a[j+1]='F') and (a[j+2]='F') and (a[j+3]='I')) then
+      inc(fffi);
+  end;
+  writeln;
+  writeln('FFFF:',ffff,', FFFI:',fffi);
+  readln;
+end.
+
+</code>
+
+Megoldás tömbök használatával.
+
+<code pascal fejvagyiras.pas>
+program fejvagyiras;
+const m=1000;
+var
+  egymasutan,dobas,dobas2,sum,j,fej,iras,
+  maxindex,max,db,ffff,fffi,
+  i,n:integer;
+  T:array [1..5000] of char;
+  a:array [1..4*m] of char;
+  tipp,egydobas,dobott:string[2];
+  relativ: real;
+  f:text;
+begin
+  randomize;
+  writeln('1. feladat');
+  dobas:=random(2)+1;
+  if dobas=1 then
+  begin
+    egydobas:='I';
+    writeln(egydobas)
+  end
+  else
+    if dobas=2 then
+    begin
+      egydobas:='F';
+      writeln(egydobas);
+    end;
+writeln('2. feladat');
+writeln('irja be tippjet: '); readln(tipp);
+dobott:=egydobas;
+writeln('a Tipp: ',tipp,' a dobas: ',dobott);
+if tipp=dobott then writeln('eltalalta') else writeln('nem talalta');
+writeln('3. feladat');
+Assign(f,'kiserlet.txt');
+reset(f);
+i:=0;
+while not eof(f) do
+begin
+  inc(i);
+  readln(f,T[i]);
+end;
+n:=i;
+writeln(n,' dobas tortent');
+writeln('4. feladat');
+for i:=1 to n do
+if T[i]='F' then inc(fej);
+
+relativ:=(fej/n)*100;
+
+writeln('fej relativ gyakorisaga: ',relativ:2:2,'%');
+writeln('5. feladat');
+i:=1;
+if ((T[i]='F') and (T[i+1]='F') and (T[i+2]='I')) then inc(egymasutan);
+for i:=1 to n-3 do
+  if ((T[i]='I') and (T[i+1]='F') and (T[i+2]='F') and (T[i+3]='I')) then
+    inc(egymasutan);
+i:=n-2;
+if ((T[i]='I') and (T[i+1]='F') and (T[i+2]='F')) then inc(egymasutan);
+
+writeln('2 fej ennyiszer talalhato egymas utan: ',egymasutan);
+writeln('6. feladat');
+max:=0;
+maxindex:=0;
+//n:=50;
+for i:=1 to n-1 do
+begin
+  if T[i] = 'F' then
+  begin
+    db:=1;
+    j:=i+1;
+    while (j<=n) and (T[j]='F') do
+    begin
+      inc(db);
+      inc(j);
+    end;
+    if db>max then
+    begin
+      max:=db;
+      maxindex:=i;
+    end;
+  end;
+end;
+writeln('a leghosszabb tisztafej ',max,' elemu, ',maxindex,' -tol');
+writeln('7. feladat');
+for i:=1 to 4*m do
+begin
+    if random > 0.5
+    then
+      a[i]:='F'
+    else
+      a[i]:='I';
+   write(a[i]);
+    if i mod 4 = 0 then write(' ');
+end;
+
+    //4*i+1 i=0..m-1
+for i:=0 to m-1 do
+begin
+  j:=4*i+1;
+  if ((a[j]='F') and (a[j+1]='F') and (a[j+2]='F') and (a[j+3]='F')) then
+    inc(ffff);
+  if ((a[j]='F') and (a[j+1]='F') and (a[j+2]='F') and (a[j+3]='I')) then
+    inc(fffi);
+end;
+writeln;
+writeln('FFFF:',ffff,', FFFI:',fffi);
+readln;
+end.
+</code>
+

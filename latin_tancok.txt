@@ -1,0 +1,158 @@
+====== Latin táncok ======
+
+<code pascal latintancok.pas>
+program latintancok; {2015. maj. ang.}
+const m=140;
+type latinos=record
+     tanc,fiu,lany:string;
+     end;
+var i,j,n,samba,k,l,f,maxk:integer;
+    tancnev{,ref1,ref2}:string;
+    van:boolean;
+    vilma:array[1..20] of integer;
+    a:array [1..m] of latinos;
+    fiuindex,lanyindex: array [1..100] of integer;
+    lany,fiu:array[1..100]of string[15];
+    t:text;
+begin
+  Assign(t,'tancrend.txt');
+  reset(t);
+  i:=0;
+  while not eof(t) do
+  begin
+    inc(i);
+    readln(t,a[i].tanc);
+    readln(t,a[i].lany);
+    readln(t,a[i].fiu);
+  end;
+  close(t);
+  n:=i;
+  writeln('1. feladat');
+  writeln('adatok beolvasasa..');
+  writeln('2. feladat');
+  writeln('az elso, es utolsokent bemutaott tanc neve rendre: ');
+  writeln(a[1].tanc,',',a[n].tanc);
+  writeln('3. feladat');
+  samba:=0;
+  for i:=1 to n do
+    if a[i].tanc='samba' then inc(samba);
+  writeln(samba,' par mutatott be sambat');
+  writeln('4. feladat');
+  writeln('Vilma a kovetkezo tancokban szerepelt: ');
+  for i:=1 to n do
+    if a[i].lany='Vilma' then writeln(a[i].tanc);
+  writeln('5. feladat');
+  van:=false;
+  readln(tancnev);
+  k:=0;
+  for i:=1 to n do
+    if (a[i].tanc=tancnev) and (a[i].lany='Vilma') then
+    begin
+      inc(k);
+      vilma[k]:=i;
+      van:=true;
+    end;
+  if van=false then writeln('Vilma nem tancolt ',tancnev,'-t');
+  for i:=1 to k do
+  writeln(a[vilma[i]].tanc,'-ban Vilma parja: ',a[vilma[i]].fiu);
+  writeln('6. feladat');
+  l:=1;
+  f:=1;
+  lany[l]:=a[1].lany;
+  fiu[f]:=a[1].fiu;
+  for i:=2 to n do
+  begin
+    k:=1;
+    while (k<=l)and(lany[k]<>a[i].lany)do
+      inc(k);
+
+    if k>l then
+    begin
+      inc(l);
+      lany[l]:=a[i].lany;
+    end;
+
+    k:=1;
+    while (k<=f)and(fiu[k]<>a[i].fiu)do
+      inc(k);
+
+    if k>f then
+    begin
+      inc(f);
+      fiu[f]:=a[i].fiu;
+    end;
+
+  end;
+
+  write('Lanyok: ');
+  for  i:=1 to l-1 do
+    write(lany[i],', ') ;
+  writeln(lany[l],'.');
+
+  write('Fiuk: ');
+  for  i:=1 to f-1 do
+    write(fiu[i],', ') ;
+  writeln(fiu[l],'.');
+
+ {
+  for i:=1 to n-1 do
+  begin
+    ref1:=a[i].lany;
+    ref2:=a[i].fiu;
+    for j:=i+1 to n do
+    begin
+      if a[j].lany=ref1 then a[j].lany:='';
+      if a[j].fiu=ref2 then a[j].fiu:='';
+    end;
+  end;
+
+  writeln('lanyok: ');
+
+  for  i:=1 to n do
+    if a[i].lany<>'' then
+      write(a[i].lany,', ');
+  }
+  writeln('7. feladat');
+
+  for i:=1 to n do
+  begin
+    j:=1;
+    while a[i].fiu<>fiu[j] do
+      inc(j);
+    inc(fiuindex[j]);
+    j:=1;
+    while a[i].lany<>lany[j] do
+      inc(j);
+    inc(lanyindex[j]);
+  end;
+
+  {for i:=1 to f do
+    write(fiuindex[i],' ');
+  writeln;}
+  maxk:=fiuindex[1];
+  for k:=2 to f do
+    if fiuindex[k]>maxk then maxk:=fiuindex[k];
+  //writeln(maxk);
+  write('A leggyakoribb fiunevek: ');
+  for k:=1 to f do
+    if fiuindex[k]=maxk then
+      write(fiu[k],' ');
+  writeln;
+
+  {for i:=1 to l do
+    write(lanyindex[i],' ');
+  writeln;}
+  maxk:=lanyindex[1];
+  for k:=2 to l do
+    if lanyindex[k]>maxk then maxk:=lanyindex[k];
+  //writeln(maxk);
+  write('A leggyakoribb lanynevek: ');
+  for k:=1 to l do
+    if lanyindex[k]=maxk then
+      write(lany[k],' ');
+
+readln;
+end.
+
+
+</code>

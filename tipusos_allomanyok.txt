@@ -1,0 +1,67 @@
+====== Típusos állományok ======
+
+1. Fájl típusú változó deklarálása 
+<code pascal fajlvaltozo1.pas>
+var
+  f: file of típus;
+</code>
+
+2. Fájl változó hozzárendelése a háttértáron lévő állományhoz
+
+<code pascal fajlhozzarendel1.pas>
+assign (f, 'fajl.adat');
+</code>
+
+3. Fájl beviteli-kiviteli hibáinak vizsgálata fájlmegnyitásakor 
+<code pascal fajlolvasasnyitas1.pas>
+{$i-}
+Reset(f);
+if IOResult <> 0 then 
+begin
+  Write ('Fajlkezelesi hiba!');
+  Readln;
+  Halt (1);
+end;
+{$i+}
+</code>
+
+4. Megnyitás írásra vagy újraírásra
+<code pascal fajlirasnyitas1.pas>
+Rewrite (f);
+</code>
+
+5. Megnyitás hozzáírásra
+<code pascal fajlhozzairas1.pas>
+Append(f);
+</code>
+
+6. Írás a fájlba
+<code pascal fajlbairas1.pas>
+Write(f, adatok);
+</code>
+
+7. Olvasás a fájlból
+<code pascal fajlbololvasas1.pas>
+Read(f, valtozo);
+</code>
+
+8. Az összes adat beolvasása a fájlból
+<code pascal fajlmindbeolvas1.pas>
+index:=0;
+While not eof(f) do
+begin
+  index:=index+1;
+  Read(f, tomb[index]);
+end;
+beolvasott_adatmennyiseg := index;
+</code>
+
+9. A fájl egy bizonyos sorszámú elemének keresése
+<code pascal fajlkeres1.pas>
+Seek(f, pozicio);
+</code>
+
+10. A fájl bezárása
+<code pascal fajlbezaras1.pas>
+Close(f);
+</code>

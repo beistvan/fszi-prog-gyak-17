@@ -1,0 +1,165 @@
+====== Únióképzés ======
+
+
+**Általános feladat**: Rendelkezésünkre áll egy N és egy M elemű halmaz az A() és a B() vektorban ábrázolva. Készítsük el a két halmaz egyesítését a C() vektorba!
+
+<code bash uniokepzes.txt>
+Eljárás:
+	Ciklus I=1-től N-ig
+		C(I):=A(I)
+	Ciklus vége
+	CN:=N
+	Ciklus J=1-től M-ig
+		I:=1
+		Ciklus amíg I<=N és A(I)<>B(J)
+		    I:=I+1
+		Ciklus vége
+		Ha I>N akkor 
+                    CN:=CN+1
+		    C(CN):=B(J)
+                Ha vége
+	Ciklus vége
+Eljárás vége.
+</code>
+
+
+Pascal forráskód
+
+<code pascal uniokepzes.pas>
+program uniokepzes;
+const n = 10;
+      m = 12;
+var a: array [1..n] of integer;
+    b: array [1..m] of integer;
+    c: array [1..n+m] of integer;
+    i, j, k: integer;
+begin
+  randomize;
+  //tömbök elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(8);
+    write(a[i], ' ');
+  end;
+  writeln;
+  for j:=1 to m do
+  begin
+    b[j]:=random(8);
+    write(b[j], ' ');
+  end;
+  writeln;
+  //írjuk ki a c-be az a és b unióját!
+  //(egyesítünk)
+  for i:=1 to n do
+    c[i]:=a[i];
+  k:=n;
+  for j:=1 to m do begin
+    i:=1;
+    while (i<=n) and (a[i]<>b[j]) do
+      i:=i+1;
+    if i>n then begin
+      k:=k+1;
+      c[k]:=b[j];
+    end;
+  end;
+  writeln('az a es b unioja a c tombben: ');
+  for i:=1 to k do
+    write(c[i], ' ');
+  readln;
+end.
+
+</code>
+
+[[https://ideone.com/FyAxB9 | Az <uniokepzes.pas> forráskódjának futtatása online ]]
+
+Unióképzés egyedi elemekkel.
+
+<code pascal uniokepzes_egyedielemek.pas>
+program uniokepzes_egyedielemek;
+const n = 10;
+      m = 12;
+var a: array [1..n] of integer;
+    b: array [1..m] of integer;
+    c: array [1..n+m] of integer;
+    i, j, k, l: integer;
+begin
+  randomize;
+  //tömbök elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(7);
+    write(a[i], ' ');
+  end;
+  writeln;
+  for j:=1 to m do
+  begin
+    b[j]:=random(7);
+    write(b[j], ' ');
+  end;
+  writeln;
+  //írjuk ki a c-be az a és b unióját!(egyesítsünk)
+  k:=0;
+  for i:=1 to n do begin
+    l:=1;
+    while (l<=k) and (c[l]<>a[i]) do
+      l:=l+1;
+    if l>k then begin
+      k:=k+1;
+      c[k]:=a[i];
+    end;
+  end;
+  //writeln(k);
+  for j:=1 to m do begin
+    i:=1;
+    while (i<=n) and (a[i]<>b[j]) do
+      i:=i+1;
+    if i>n then begin
+      l:=1;
+      while (l<=k) and (c[l]<>b[j]) do
+        l:=l+1;
+      if l>k then begin
+        k:=k+1;
+        c[k]:=b[j];
+      end;
+    end;
+  end;
+  writeln('az a es b unioja a c tombben: ');
+  for i:=1 to k do
+    write(c[i], ' ');
+  readln;
+end.
+
+
+</code>
+
+
+[[https://ideone.com/dTtaeY | Az <uniokepzes_egyedielemek.pas> forráskódjának futtatása online ]]
+
+===== Órai gyakorlat =====
+(szükséges könyvtár: [[inf-prog-fszi:eljarasok_es_fueggvenyek#a_tomb_iopas_koenyvtar|tomb_io.pas]])
+
+<code pascal uniokepzes.pas>
+program uniokepzes;
+uses tomb_io;
+var  a,b,c:tomb;
+     n,m,i,j,k:byte;
+begin
+  beolvas(a,n,'a');
+  beolvas(b,m,'b');
+  kiir(a,n,'a');
+  kiir(b,m,'b');
+  for i:=1 to n do
+    c[i]:=a[i];
+  k:=n;
+  for j:=1 to m do
+  begin
+    if not talal(a,n,b[j])and not talal(c,k,b[j]) then
+    begin
+      k:=k+1;
+      c[k]:=b[j];
+    end;
+  end;
+  kiir(c,k,'c');
+  readln;
+end.
+</code>

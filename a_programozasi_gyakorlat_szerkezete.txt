@@ -1,0 +1,13 @@
+===== A programozási gyakorlat sikeres teljesítéséhez szükséges beadandó anyag szerkezete =====
+
+  - Előadások jegyzete és/vagy órai munkafüzet
+  - Beadandó füzet, kézzel írott és a következőkből áll:
+      - A füzet meg van címezve: gyakorlati füzet, tanuló neve, szakja és iskolája neve
+      - A megoldandó feladat(ok) és/vagy projektek füzetbe írva:
+          - Az adott téma elméleti leírása 
+          - A feladat megfogalmazása
+          - A feladat megoldása programozási nyelve(ke)n
+          - A feladat megoldásának folyamatábrája
+          - Bemeneti vagy annak megfelelő adatok, esetleg többféle adat féltüntetése
+          - Esetleges Excelben végzet számítási feladat-ellenőrzés
+  - A munka megvédése önálló prezentációs előadáson 5 percben, a kérdésekre további 2 perc

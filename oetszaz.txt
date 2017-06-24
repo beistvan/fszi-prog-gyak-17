@@ -1,0 +1,156 @@
+====== Ötszáz ======
+
+<code pascal otszaz.pas>
+
+Program otszaz;  {2016.május}
+Const nmax = 1000;
+      mmax = 20;
+//6. feladat
+function ertek(darabszam: integer): integer;
+var i, osszeg: integer;
+  Begin
+    osszeg:=0;
+    If darabszam>0 then
+      For i:=1 to darabszam do
+        case i of
+          1: osszeg:=osszeg+500;
+          2: osszeg:=osszeg+450;
+        else
+          osszeg:=osszeg+400;
+        End;
+    ertek:=osszeg;
+  End;
+Var t: text;
+    n, fiz, elsodb, vassorszam, vasdb, i, f, fu, arudb,
+    m, j, fsora, fdb, fkezd, sum, k: integer;
+    vasnev: string;
+    a: array [1..nmax] of string[20];
+    aru: array [1..mmax] of record nev: string[20]; db:byte; end;
+procedure lista(fsorszam:integer);
+Begin
+  fsora:=0;
+  fkezd:=0;
+  fdb:=0;
+  i:=1;
+  While (i<=n) and (fdb<>fsorszam) do
+    Begin
+      If a[i]='F' then
+      Begin
+        fkezd:=fsora;
+        fsora:=i;
+        inc(fdb);
+      End;
+      inc(i);
+    End;
+  If fsora=1 then fkezd:=1;
+  //Writeln('fsora: ', fsora);
+  m:=0;
+  For i:=fkezd to fsora do
+    Begin
+      j:=1;
+      While (j<=m) and (aru[j].nev<>a[i]) do
+        inc(j);
+      If j>m then
+        Begin
+          inc(m);
+          aru[m].nev:=a[i];
+          aru[m].db:=1;
+        End else
+          inc(aru[j].db);
+    End;
+End;
+
+Begin
+// 1. feladat
+  Assign(t, 'penztar.txt');
+  Reset(t);
+  Writeln('1.feladat. A file beolvasva.');
+// 2. feladat
+  Writeln('2.feladat:');
+  n:=0;
+  fiz:=0;
+  While not eof(t) do
+    Begin
+      n:=n+1;
+      Readln(t,a[n]);
+      If a[n]='F' then inc(fiz);
+    End;
+  Close(t);
+  //Writeln('Beolvasva ', n, ' sor.');
+  Writeln('A fizetesek szama: ', fiz);
+// 3. feladat
+  Writeln('3.feladat:');
+  elsodb:=0;
+  While (elsodb<n) and (a[elsodb+1]<>'F') do
+    elsodb:=elsodb+1;
+  Writeln('Az elso vasarlo ', elsodb, ' darab arucikket vasarolt.');
+// 4. feladat
+  Writeln('4.feladat:');
+  Write('Adja meg egy vasarlas sorszamat: ');
+  Readln(vassorszam);
+  Write('Adja meg egy arucikk nevet: ');
+  Readln(vasnev);
+  Write('Adja meg a vasarolt darabszamot: ');
+  Readln(vasdb);
+// 5. feladat
+  Writeln('5.feladat:');
+  //a. feladat
+  i:=1;
+  f:=1;
+  While a[i]<>vasnev do
+    Begin
+      inc(i);
+      If a[i]='F' then
+        inc(f);
+    End;
+  Writeln('Az elso vasarlas sorszama: ', f);
+  f:=1;
+  fu:=1;
+  arudb:=0;
+  For i:=1 to n do
+    Begin
+      If (a[i]=vasnev)and(fu<>f) then
+      Begin
+        inc(arudb);
+        fu:=f;
+      End;
+      If a[i]='F' then
+        inc(f);
+    End;
+  Writeln('Az utolso vasarlas sorszama: ', fu);
+  //b. feladat
+  Writeln(arudb, ' vasarlas soran vettek belole.');
+
+// 6. feladat
+  //Writeln('6.feladat: Az ertek fuggveny deklaralva.');
+
+  Writeln(vasdb, ' darab vetelekor: ', ertek(vasdb));
+// 7. feladat
+  Writeln('7.feladat:');
+  lista(vassorszam);
+  For i:=1 to m do
+    If aru[i].nev<>'F' then
+      Writeln(aru[i].db, ' ', aru[i].nev);
+// 8. feladat
+//1-nel nem mukszik
+  Writeln('8.feladat: Az osszeg.txt allomanyba az adatok kiirva.');
+  Assign(t, 'osszeg.txt');
+  Rewrite(t);
+  For k:=1 to fiz do
+  Begin
+    lista(k);
+    sum:=0;
+    For i:=1 to m do
+      If aru[i].nev<>'F' then
+        sum:=sum+ertek(aru[i].db);
+//        For i:=1 to m do
+    //If aru[i].nev<>'F' then
+//      Writeln(aru[i].db, ' ', aru[i].nev);
+    Writeln(t,k,': ', sum);
+    Writeln(k,': ', sum);
+  End;
+  Close(t);
+ Readln;
+End.
+
+</code>

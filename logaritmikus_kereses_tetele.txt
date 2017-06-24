@@ -1,0 +1,114 @@
+====== Logaritmikus keresés tétele ======
+
+
+**Általános feladat**: N elemű rendezett sorozat; egy keresett elem (X). Szerepel-e a keresett elem a sorozatban és ha igen, akkor mi a sorszáma.
+Kihasználjuk, hogy a sorozat rendezett, így el tudjuk dönteni, hogy a keresett elem az éppen vizsgált elemhez képest hol helyezkedik el.\\
+Al, F: intervallum alsó és felső végpontjai.
+
+<code bash logkeres.txt>
+Eljárás:
+	Al := 1
+	F := N
+	Ciklus
+		K := INT((Al + F) / 2)
+		Ha A(K) < X akkor Al := K + 1
+		Ha A(K) > X akkor F := K - 1
+	amíg Al <= F és A(K) != X		(amíg Al > F vagy A(K) = X)
+	Ciklus vége
+	VAN := Al <= F
+	Ha VAN akkor SORSZ := K
+Eljárás vége.
+</code>
+
+**Megjegyzés:**
+azért hívják logaritmikus keresésnek, mert a ciklus lépésszáma kb. log N
+sokkal hatékonyabb rendezett sorozatra, mint a lineáris keresés.
+
+
+Pascal forráskód
+
+<code pascal binaris_logaritmikus_kereses.pas>
+program binaris_logaritmikus_kereses;
+const n = 10;
+var a: array [1..n] of integer;
+    i, j, c, x, als, fel, k: integer;
+    van: boolean;
+begin
+  randomize;
+  //A tömb elkészítése
+  for i:=1 to n do
+    a[i]:=random(9);
+  //Tömb rendezése
+  for i:=1 to n-1 do
+    for j:=i+1 to n do
+      if a[j]<a[i] then begin
+        c:=a[j];
+        a[j]:=a[i];
+        a[i]:=c;
+      end;
+  //A rendezett tomb kiiratasa
+  for i:=1 to n do
+    write(a[i], ' ');
+  Writeln;
+  //Binaris kereses
+  als:=1;
+  fel:=n;
+  x:=random(11);
+  writeln('a keresett elem: ', x);
+  repeat
+    k:=(als+fel) div 2;
+    if a[k]<x then als:=k+1;
+    if a[k]>x then fel:=k-1;
+  until (als>fel) or (a[k]=x);
+  van:=als<=fel;
+  if van then
+    writeln('megtalaltam, a sorszama: ', k)
+  else
+    writeln('nincsen meg');
+  readln;
+end.
+
+</code>
+
+[[https://ideone.com/u5EiEy | A <binaris_logaritmikus_kereses.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal logaritmikus_kereses.pas>
+program logaritmikus_kereses;
+const n=8;
+var i,j,al,fel,keresendo,koz, cs : integer;
+    van:boolean;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  for i:=1 to n-1 do
+    for j:=i+1 to n do
+      if a[j]<a[i] then
+      begin
+        cs:=a[j];
+        a[j]:=a[i];
+        a[i]:=cs;
+      end;
+  write('A rendezett tomb elemei: ');
+  for i:=1 to n do
+    write(a[i]:3);
+  writeln;
+  //logaritmikus kereses
+  al:=1;
+  fel:=n;
+  write('A keresendo szam: '); readln(keresendo);
+  repeat
+    koz := (al+fel) div 2;
+    if a[koz]<keresendo then al:=koz+1;
+    if a[koz]>keresendo then fel:=koz-1;
+  until (al>fel) or (a[koz]=keresendo);
+  van := al<=fel;
+  if van then write('Megvan, sorszama: ',koz)else write('Nincs meg');
+  readln;
+end.
+</code>

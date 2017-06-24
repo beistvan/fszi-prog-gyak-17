@@ -1,0 +1,62 @@
+====== Minimumkiválasztás tétele ======
+
+
+Sorozat legkisebb elemének értéke.
+
+<code pascal minimum.txt>
+Eljárás:
+    ÉRTÉK := A(1)
+    Ciklus I = 2-től N-ig
+	Ha  A(I) < ÉRTÉK akkor ÉRTÉK := A(I)
+    Ciklus vége
+Eljárás vége.
+</code>
+
+Pascal forráskód
+
+<code pascal minimum.pas>
+program minimum;
+const n = 10;
+var a:array [1..n] of integer;
+    i,min: integer;
+begin
+  randomize;
+  a[1]:=10+random(90);
+  min:=a[1];
+  write(a[1], ' ');
+  for i:=2 to n do
+  begin
+    a[i]:=10+random(90);
+    write(a[i], ' ');
+    if a[i] < min then min:=a[i];
+  end;
+  writeln;
+  writeln('min: ', min);
+  readln;
+end.
+</code>
+
+[[https://ideone.com/2ALlAc | A <minimum.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal minimum_ertek.pas>
+program minimum_ertek;
+const n=8;
+var i, min_erteke, min_index: integer;
+    a: array [1..n] of integer;
+begin
+  write(' a[1]='); readln(a[1]);
+  min_erteke:=a[1];
+  min_index:=1;
+  for i:= 2 to n do
+  begin
+    write(' a[',i,']='); readln(a[i]);
+    if a[i]<=min_erteke then begin min_erteke :=a[i]; min_index:=i; end;
+  end;
+  writeln('A tomb legkisebb eleme: ',min_erteke);
+  writeln('A tomb legkisebb elemenek indexe: ',min_index);
+  readln;
+end.
+
+</code>

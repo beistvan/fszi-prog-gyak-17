@@ -1,0 +1,269 @@
+====== Metszetképzés ======
+
+
+Általános feladat: Rendelkezésünkre áll egy N és egy M elemű halmaz az A() és a B() vektorban ábrázolva. Készítsük el a két halmaz metszetét a C() vektorba!
+
+<code bash metszet.txt>
+Eljárás:
+	CN:=0
+	Ciklus I=1-től N-ig
+		J:=1
+		Ciklus amíg J<=M és A(I)<>B(J)
+			J:=J+1
+		Ciklus vége
+		Ha J<=M akkor CN:=CN+1
+		C(CN):=A(I)
+	Ciklus vége
+Eljárás vége.
+</code>
+
+
+Pascal forráskód
+
+<code pascal metszetkepzes.pas>
+program metszetkepzes;
+const n = 10;
+      m = 12;
+var a: array [1..n] of integer;
+    b: array [1..m] of integer;
+    c: array [1..n+m] of integer;
+    i, j, k: integer;
+begin
+  randomize;
+  //tömbök elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(8);
+    write(a[i], ' ');
+  end;
+  writeln;
+  for j:=1 to m do
+  begin
+    b[j]:=random(8);
+    write(b[j], ' ');
+  end;
+  writeln;
+  //írjuk ki a c-be az a és b metszetét!(kozos elemeit)
+  k:=0;
+  for i:=1 to n do begin
+    j:=1;
+    while (j<=m) and (a[i]<>b[j]) do
+      j:=j+1;
+    if j<=m then begin
+      k:=k+1;
+      c[k]:=a[i];
+    end;
+  end;
+  writeln('az a es b metszete a c tombben: ');
+  for i:=1 to k do
+    write(c[i], ' ');
+  readln;
+end.
+
+</code>
+
+[[https://ideone.com/Ri4TER | A <metszetkepzes.pas> forráskódjának futtatása online ]]
+
+Metszetképzés egyedi elemekből.
+
+<code pascal metszetkepzes_egyedielemek.pas>
+program metszetkepzes_egyedielemek;
+const n = 10;
+      m = 12;
+var a: array [1..n] of integer;
+    b: array [1..m] of integer;
+    c: array [1..n+m] of integer;
+    i, j, k, l: integer;
+begin
+  randomize;
+  //tömbök elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(8);
+    write(a[i], ' ');
+  end;
+  writeln;
+  for j:=1 to m do
+  begin
+    b[j]:=random(8);
+    write(b[j], ' ');
+  end;
+  writeln;
+  //írjuk ki a c-be az a és b metszetét!(kozos elemeit)
+  k:=0;
+  for i:=1 to n do begin
+    j:=1;
+    while (j<=m) and (a[i]<>b[j]) do
+      j:=j+1;
+    if j<=m then begin
+      l:=1;
+      while (l<=k) and (c[l]<>a[i]) do
+        l:=l+1;
+      if l>k then begin
+        k:=k+1;
+        c[k]:=a[i];
+      end;
+    end;
+  end;
+  writeln('az a es b metszete a c tombben: ');
+  for i:=1 to k do
+    write(c[i], ' ');
+  readln;
+end.
+</code>
+
+[[https://ideone.com/sgR7yq | A <metszetkepzes_egyedielemek.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal metszetkepzes1.pas>
+program metszetkepzes1;
+const max_hossz=10; n=8; m=6;
+type tomb = array [1..max_hossz] of integer;
+var i,j, k, l : integer;
+    a,b,c: tomb;
+procedure beolvas(var t : tomb; hossz: byte; nev: char );
+var i: integer;
+begin
+  writeln('Kerem a(z) "', nev, '" tomb elemeit: ');
+  for i:=1 to hossz do
+  begin
+    write(nev, '[',i,'] = '); readln(t[i]);
+  end;
+end;
+procedure kiir(t : tomb; hossz: byte);
+var i: integer;
+begin
+  for i:=1 to hossz do
+    write(t[i]:3);
+  writeln;
+end;
+begin //foprogram
+  beolvas(a, n, 'a');
+  beolvas(b, m, 'b');
+  kiir(a,n);
+  kiir(b,m);
+  k:=0;
+  for i:=1 to n do
+  begin
+    j:=1;
+    while (j<=m) and (a[i]<>b[j]) do
+      j := j + 1;
+    if j<=m then
+    begin
+      l:=1;
+      while (l<=k) and (c[l]<>a[i]) do
+        l := l + 1;
+      if l>k then
+      begin
+        k:=k+1;
+        c[k]:=a[i];
+      end;
+    end;
+  end;
+  kiir(c, k);
+  readln;
+end.
+
+</code>
+
+<code pascal metszetkepzes2.pas>
+program metszetkepzes2;
+const maxhossz=10; n=8; m=6;
+type tomb = array [1..maxhossz] of integer;
+var i, k : integer;
+    a,b,c: tomb;
+procedure beolvas(var t : tomb; hossz: byte; nev: char );
+var i: integer;
+begin
+  writeln('Kerem a(z) "', nev, '" tomb elemeit: ');
+  for i:=1 to hossz do
+  begin
+    write(nev, '[',i,'] = '); readln(t[i]);
+  end;
+end;
+procedure kiir(t : tomb; hossz: byte);
+var i: integer;
+begin
+  for i:=1 to hossz do
+    write(t[i]:3);
+  writeln;
+end;
+function talal(t: tomb; hossz:byte; elem:integer):boolean;
+var i:integer;
+begin
+  i:=1;
+  while (i<=hossz) and (t[i] <> elem) do
+    i:=i+1;
+  talal:=i<=hossz;
+end;
+begin //foprogram
+  beolvas(a, n,  'a');
+  beolvas(b, m,  'b');
+  kiir(a,n);
+  kiir(b,m);
+  k:=0;
+  for i:=1 to n do begin
+    if talal(b,m,a[i]) then begin
+      if not talal(c,k,a[i]) then begin
+        k:=k+1;
+        c[k]:=a[i];
+      end;
+    end;
+  end;
+  kiir(c, k);
+  readln;
+end.
+
+</code>
+
+<code pascal metszetkepzes3.pas>
+program metszetkepzes3;
+const maxhossz=10; n=8; m=6;
+type tomb = array [1..maxhossz] of integer;
+procedure beolvas(var t : tomb; hossz: byte; nev: char );
+var i: integer;
+begin
+  writeln('Kerem a(z) "', nev, '" tomb elemeit: ');
+  for i:=1 to hossz do
+  begin
+    write(nev, '[',i,'] = '); readln(t[i]);
+  end;
+end;
+procedure kiir(t : tomb; hossz: byte; nev: char );
+var i: integer;
+begin
+  write(nev+': ');
+  for i:=1 to hossz do
+    write(t[i]:3);
+  writeln;
+end;
+function talal(t: tomb; hossz:byte; elem:integer):boolean;
+var i:integer;
+begin
+  i:=1;
+  while (i<=hossz) and (t[i] <> elem) do
+    i:=i+1;
+  talal:=i<=hossz;
+end;
+var i, k : integer;
+    a,b,c: tomb;
+begin //foprogram
+  beolvas(a, n,  'a');
+  beolvas(b, m,  'b');
+  kiir(a,n,'a');
+  kiir(b,m,'b');
+  k:=0;
+  for i:=1 to n do
+  begin
+    if talal(b,m,a[i]) and not talal(c,k,a[i])then
+    begin
+      k:=k+1;
+      c[k]:=a[i];
+    end;
+  end;
+  kiir(c, k,'c');
+  readln;
+end.
+
+</code>

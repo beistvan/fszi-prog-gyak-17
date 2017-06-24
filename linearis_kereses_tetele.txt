@@ -1,0 +1,97 @@
+====== Lineáris keresés tétele ======
+
+
+Általános feladat: N elemű sorozat; sorozat elemein értelmezett T tulajdonság. Van-e T tulajdonságú elem és ha van, akkor mi a sorszáma. (Eldöntés és kiválasztás együtt.)
+
+<code bash linkeres.txt>
+Eljárás:
+	I := 1
+	Ciklus amíg I <= N és A(I) nem T tulajdonságú
+		I := I + 1
+	Ciklus vége
+	VAN := I <= N
+	Ha VAN akkor SORSZ := I
+Eljárás vége.
+</code>
+
+Pascal forráskód
+
+<code pascal linearis_kereses.pas>
+program linearis_kereses;
+const n = 10;
+var a:array [1..n] of integer;
+    i, sorsz: integer;
+    van: boolean;
+begin
+  randomize;
+  //a tömb elkészítése
+  for i:=1 to n do
+  begin
+    a[i]:=random(10);
+    write(a[i], ' ');
+  end;
+  writeln;
+  //van-e benne 5-ös?
+  i:=1;
+  while (i<=n) and (a[i]<>5) do
+    i:=i+1;
+  van:= i<=n;
+  write('Van-e a tombben 5-os? ');
+  if van then begin
+    sorsz:=i;
+    writeln('Van, a sorszama ', sorsz);
+  end
+  else
+    writeln('Nincs.');
+  readln;
+end.
+</code>
+
+[[https://ideone.com/omNb64 | A <linearis_kereses.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+<code pascal linearis_kereses.pas>
+program linearis_kereses;
+const n=8;
+var i : integer; van : boolean;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  i:=1;
+  while (i<=n) and (a[i]<>5) do //a T tulajdonsag: a tombben van-e 5-os
+    inc(i); //i:=i+1;
+  //writeln(i);
+  van:=i<=n;
+  if van then write('Van 5-os, sorszama: ',i) else write('Nincs 5-os');
+  readln;
+end.
+
+</code>
+
+
+
+<code pascal linearis_kereses_for.pas>
+program linearis_kereses_for;
+const n=8;
+var i : integer; volt : boolean;
+    a: array [1..n] of integer;
+begin
+  writeln('Kerem a tomb elemeit: ');
+  for i:=1 to n do
+  begin
+    write('a[',i,'] = '); readln(a[i]);
+  end;
+  volt:=false;
+  for i:=1 to n do
+    if a[i]=5 then begin volt:=true; break; end; //a T tulajdonsag: a tombben van-e 5-os
+  //writeln(i);
+  if volt then write('Van 5-os, sorszama: ',i) else write('Nincs 5-os');
+  readln;
+end.
+
+</code>

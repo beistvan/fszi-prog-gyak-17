@@ -1,0 +1,24 @@
+===== Hivatkozások =====
+
+  - A jelen oldal linkje: [[http://okt.kmf.uz.ua/dw]]
+  - Pascal programozási linkek:
+    - http://prog.ide.sk/pas.php
+    - http://wiki.freepascal.org/ [angol]
+    - https://www.tutorialspoint.com/pascal/ [angol]
+  - Érettségi feladatok:
+    - https://www.oktatas.hu/kozneveles/erettsegi/feladatsorok
+  - Programozási környezetek:
+    - Pascal
+      - DevPas
+      - FreePascal
+    - C, C++
+      - Code::Blocks
+      - DevCpp
+    - C#
+      - SharpDevelop
+      - MonoDevelop
+      - Microsoft Visual Studio Community Edition
+  - Algoritmusok animációja
+    - infoc.eet.bme.hu/ea07/
+    - algoanim.ide.sk/
+    - toptal.com/developers/sorting-algorithms

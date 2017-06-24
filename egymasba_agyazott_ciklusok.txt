@@ -1,0 +1,169 @@
+====== Egymásba ágyazott ciklusok. Kétszeresen, háromszorosan stb. egymásba ágyazott ciklusok. ======
+
+===== Egymásba ágyazott ''For'' ciklusok =====
+
+<code pascal foregymasbabeagyaz.pas>
+for változó_1 := kezdő_érték_1 to [downto] végső_érték_1 do
+begin
+  for változó_2 := kezdő_érték_2 to [downto] végső_érték_2 do   
+  begin   
+    utasítás(ok);
+  end;
+end; 
+</code>
+
+===== Egymásba ágyazott ''While'' ciklusok =====
+
+<code pascal whileegymasbabeagyaz.pas>
+while(feltétel_1)do
+begin
+  while(feltétel_2) do   
+  begin
+    utasítás(ok);
+  end;
+  utasítás(ok);
+end;
+</code>
+
+===== Egymásba ágyazott ''Repeat'' ciklusok ===== 
+
+<code pascal repeategymasbabeagyaz.pas>
+repeat
+  utasítás(ok);
+  repeat
+    utasítás(ok);
+  until(feltétel_2);
+until(feltétel_1);
+</code>
+
+
+===== Kétszeresen egymásba ágyazott ciklusok =====
+
+<code pascal prim.pas>
+program prim;
+var
+  i, j : integer;
+begin
+  for i := 2 to 50 do   
+  begin
+    for j := 2 to i do
+      if (i mod j) = 0  then
+        break; {* ha van osztója, nem prím! *}
+      
+    if (j = i) then
+      writeln(i , ' prim' );
+  end;
+end.
+</code>
+
+[[https://ideone.com/ktG6Bs | A <prim.pas> forráskódjának futtatása online]]
+
+===== Háromszorosan egymásba ágyazott ciklusok =====
+
+$c_{i,j}=\displaystyle\sum_{k=1}^{n}a_{i,k}b_{k,j}; \;\; i = \overline{1,n}; j = \overline{1,n}.$
+
+<code pascal matrixszorzas.pas>
+for i := 1 to n do
+  for j := 1 to n do
+    begin
+      sum := 0;
+      for k := 1 to n do
+        sum := sum + a[i,k] * b[k,j];
+        c[i,j] := sum;
+    end;
+</code>
+
+<code pascal matrixszorzas.pas>
+program matrixszorzas;
+const n = 3;
+type tomb_tipus =  array[1..n, 1..n] of integer;
+procedure kiir(t: tomb_tipus; h: byte);
+var i, j: integer;
+begin
+  for i := 1 to n do begin
+    for j := 1 to n do
+      write(t[i,j]:h);
+    writeln;
+  end;
+  writeln;
+end;
+const a: tomb_tipus = ((1,2,4),(5,6,7),(8,9,1));
+      b: tomb_tipus = ((2,3,6),(2,3,7),(1,3,0));
+var i, j, k, sum: integer; c: tomb_tipus;
+begin
+  kiir(a, 3);
+  kiir(b, 3);
+  for i := 1 to n do
+    for j := 1 to n do
+      begin
+        sum := 0;
+        for k := 1 to n do
+          sum := sum + a[i,k] * b[k,j];
+        c[i,j] := sum;
+      end;
+  kiir(c, 4);
+  readln;
+end.
+</code>
+
+[[https://ideone.com/6Lk2ch]]
+
+<code pascal matrixszorzas1.pas>
+program matrixszorzas1;
+const n = 3;
+type tomb_tipus =  array[1..n, 1..n] of integer;
+procedure kiir(t: tomb_tipus; h: byte);
+var i, j: integer;
+begin
+  for i := 1 to n do begin
+    for j := 1 to n do
+      write(t[i,j]:h);
+    writeln;
+  end;
+  writeln;
+end;
+const a: tomb_tipus = ((1,2,4),(5,6,7),(8,9,1));
+      b: tomb_tipus = ((2,3,6),(2,3,7),(1,3,0));
+var i, j, k: integer; c: tomb_tipus;
+begin
+  kiir(a, 3);
+  kiir(b, 3);
+  for i := 1 to n do
+    for j := 1 to n do
+      for k := 1 to n do
+        c[i,j] := c[i,j] + a[i,k] * b[k,j];
+  kiir(c, 4);
+  readln;
+end.
+
+</code>
+
+<code pascal gotos_program.pas>
+program gotos_program;
+uses crt;
+const n = 3;
+type tomb_tipus = array[1..n,1..n] of byte;
+procedure kiir(x,y:integer; t: tomb_tipus);
+var i,j:integer;
+begin
+  for i:=1 to 3 do
+    for j:=1 to 3 do
+    begin
+      gotoxy(x+3*j,y+i);
+      write(t[i,j]);
+    end;
+end;
+var i,j:integer;
+const a: tomb_tipus = ((1,2,4),(5,6,7),(8,9,1));
+      b: tomb_tipus = ((2,3,6),(2,3,7),(1,3,0));
+begin
+  kiir(1,1,a);
+  kiir(12,1,b);
+  for i:=1 to 3 do
+    for j:=1 to 5 do
+      kiir(j*11+1,i*5+1,b);
+  readln;
+end.
+
+</code>
+

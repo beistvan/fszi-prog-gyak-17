@@ -1,0 +1,363 @@
+====== Rajz és grafika ======
+
+===== A grafikus program struktúrája =====
+
+1. A grafikus könyvtár becsatolása
+<code pascal graphunit.pas>
+uses graph;
+</code>
+
+2. A grafikus meghajtó (driver) változójának deklarálása
+<code pascal graphunit.pas>
+var gd:integer; {smallint //DevPas}
+</code>
+
+3. Grafikus üzemmód változójának deklarálása
+<code pascal graphunit.pas>
+var gm:integer; {smallint //DevPas}
+</code>
+
+7. A grafikus üzemmódokat egyszerre is megadhatjuk
+<code pascal graphinit.pas>
+var gd, gm:integer; {smallint //DevPas}
+</code>
+
+5. Grafikus meghajtó kiválasztása
+<code pascal graphkivalaszt.pas>
+gd:=Detect;
+</code>
+
+6. A grafikus üzemmód inicializálása
+<code pascal graphinit.pas>
+InitGraph(gd,gm,'');
+</code>
+
+7. Grafikus hiba feldolgozása
+<code pascal graphhiba.pas>
+if GraphResult<>GrOk then begin 
+            Write('Grafikus hiba'); 
+            Halt(1); 
+      end;
+</code>
+
+8. Rajzolás rajzolási parancsok
+<code pascal grapheljarasok.pas>
+{grafikus eljárások és függvények}
+</code>
+
+9. Kilépés a grafikus üzemmódból
+<code pascal graphbezar.pas>
+CloseGraph;
+</code>
+
+10. Grafikus program
+<code pascal grafika.pas>
+ program grafika;
+ uses graph;
+
+ var gd,gm:integer;
+
+ begin 
+      gd:=Detect; 
+      InitGraph(gd,gm,''); 
+      if GraphResult<>GrOk then begin 
+            Write('Grafikus hiba'); 
+            Halt(1); 
+      end;
+
+     {grafikus eljárások és függvények}
+
+      CloseGraph; 
+ end.
+</code>
+
+===== A grafikus parancsok =====
+
+**Grafikus kurzor pozicionálása**
+
+''GetX : integer''                                                                  A grafikus kurzor aktuális pozíciójának x koordinátája.
+
+''GetY : integer''                                                                   A grafikus kurzor aktuális pozíciójának y koordinátája.
+
+''GetMaxX : integer''                                                           A képernyõ legnagyobb x koordinátája.
+
+''GetMaxY : integer''                                                          A képernyõ legnagyobb y koordinátája.
+
+''MoveTo(x,y: integer);''                                                      A grafikus kurzor pozícionálása az (x,y) pontra.
+
+''MoveRel(dx,dy: integer);''                                                 A grafikus kurzor eltolása (dx,dy) koordinátákkal. 
+
+**Képernyőablak**
+
+''SetActivePage(Page: word);''                                            Kijelöli a képernyõ aktív lapját.
+
+''SetVisualPage(Page: word);''                                            Megjeleníti a megadott lapot.
+
+''ClearDevice;''                                                                   Letörli az aktív képernyõ tartalmát.
+
+''ClearViewPort;''                                                                Letörli az aktuális ablak tartalmát.
+
+''SetViewPort(x1,y1,x2,y2: integer; Clip: boolean);''             Aktuális ablak kijelölése a képernyõn.
+
+''GetViewSettings(var ViewPort: ViewPortType); ''             Aktuális ablak adatainak lekérdezése. 
+ 
+
+**Pont**
+
+''PutPixel(x,y: integer; Pixel: word); ''                                     Pontot rajzol a megadott színnel.
+
+''GetPixel(x,y: integer): word ''                                            Az (x,y) pont színe. 
+ 
+
+**Vonal**
+
+''Line(x1,y1,x2,y2: integer);  ''                                                Vonalat rajzol két pont között.
+
+''LineTo(x,y: integer); ''                                                          Vonalat húz az (x,y) pontba.
+
+''LineRel(dx,dy: integer); ''                                                     Vonalat húz a (dx,dy) távolságra lévõ pontba.
+
+''SetWriteMode(WriteMode: integer);  ''                                Vonalrajzolás módjának beállítása.
+
+''SetLineStyle(LineStyle,Pattern,Width: word); ''                     Vonal típusának beállítása.
+
+''GetLineSettings(var LineInfo: LineSettingsType);  ''              Vonal adatainak lekérdezése. 
+ 
+
+**Poligon**
+
+''Rectangle(x1,y1,x2,y2: integer);''                                           Téglalapot rajzol.
+
+''Bar(x1,y1,x2,y2: integer);''                                                      Kitöltött téglalapot rajzol.
+
+''Bar3D(x1,y1,x2,y2: integer; Depth: word; Top: boolean);''      Téglatestet rajzol adott mélységgel.
+
+''DrawPoly(NumPoints: word; var PolyPoints);''                        Sokszöget rajzol.
+
+''FillPoly(NumPoints: word; var PolyPoints);''                            Kitöltött sokszöget rajzol. 
+ 
+
+**Kör, ellipszis**
+
+''Circle(x,y: integer; Radius: word);'' Kört rajzol (x,y) középponttal és adott sugárral.
+
+''Arc(x,y: integer; StAngle,EndAngle,Radius: word);'' Körívet rajzol (x,y) középponttal  a megadott kezdõszög és végszög között.
+
+''PieSlice(x,y: integer; StAngle,EndAngle,Radius: word);'' Körcikket rajzol és kitölti.
+
+''Ellipse(x,y: integer; StAngle,EndAngle,XRadius,YRadius: word);'' Ellipszis ívet rajzol.
+
+''FillEllipse(x,y: integer; XRadius,YRadius: word);'' Teljes ellipszist rajzol és kitölti.
+
+''Sector(x,y: integer; StAngle,EndAngle,XRadius,YRadius: word);'' Ellipszis cikket rajzol és kitölti.
+
+''GetArcCoords(var ArcCoords: ArcCoordsType);'' Az utoljára rajzolt ív kezdõ- és végkoordinátáit adja vissza.
+
+''SetAspectRatio(xasp,yasp: word);'' A beépített oldalarányok megváltoztatása.
+
+''GetAspectRatio(var xasp,yasp: word);'' A beépített oldalarányok értékével tér vissza.
+
+**Kitöltés**
+
+''FloodFill(x,y: integer; Border: word);'' Az (x,y) ponttól kezdve kitölti a Borderben megadott színnel körbezárt területet.
+
+''SetFillStyle(Pattern,Color: word);'' Beállítja a kitöltés mintáját és színét.
+
+''SetFillPattern(Pattern: FillPatternType; Color: word);'' A felhasználó által definiált minta (8 byte) és szín beállítása.
+
+''GetFillPattern(var FillPattern: FillPatternType);'' A felhasználó által definiált mintát és színt adja vissza.
+
+''GetFillSettings(var FillInfo: FillSettingsType);'' Az aktuális kitöltés mintáját és színét adja vissza. 
+ 
+
+**Szín**
+
+''SetBkColor(Color: word); '' Beállítja a háttér színét.
+
+''SetColor(Color: word); '' Beállítja a rajzolás színét.
+
+''GetBkColor(Color: word);'' Az aktuális háttérszínt adja vissza.
+
+''GetColor(Color: word);'' A rajzolás aktuális színét adja vissza.
+
+''SetAllPalette(var Palette: PaletteType);'' Az alappaletta színeinek beállítása. 
+  
+''SetPalette(ColorNum,Color: word);'' Adott szín sorszámának megváltoztatása.
+
+''GetPalette(var Palette: PaletteType);'' Az aktuális paletta értékeivel tér vissza.
+
+''GetPaletteSize: integer'' Az aktuális paletta méretével tér vissza.
+
+''GetMaxColor: word '' A maximálisan felhasználható színek száma. 
+ 
+
+**Szöveg**
+
+''OutText(TextString: string); '' Szöveget ír a képernyőre.
+
+''OutTextXY(x,y: integer; TextString: string);  '' Szöveget ír a képernyőre (x,y) ponttól kezdve.
+
+''SetTextStyle(Font,Direction,CharSize: word); '' A betű típusának, méretének, és a kiírás irányának beállítása.
+
+''SetTextJustify(Horiz,Vert: word); '' A szöveg igazítása a kiírás kezdőpontjához.
+
+''GetTextSettings(var TextInfo: TextSettingsType);'' A szövegkiírás aktuális beállításait adja vissza.
+
+''TextHeight(TextString: string): word'' Betű magasságát adja vissza.
+
+''TextWidth(TextString: string): word'' Szöveg hosszát adja vissza. 
+ 
+
+**Bittérkép**
+
+''ImageSize(x1,y1,x2,y2: integer): word '' A képablak méretét adja vissza byte-ban.
+
+''GetImage(x1,y1,x2,y2: integer; var BitMap); '' A paraméterként megadott képablakot menti el a pufferbe.
+
+''PutImage(x,y: integer; var BitMap; BitBlt: word); '' A puffer tartalmát tölti be az (x,y) ponttól kezdve. 
+
+<code pascal rajz.pas>
+program rajz;
+uses graph;
+var gd,gm: smallint;  {integer}
+begin
+  gd := Detect;
+  InitGraph(gd, gm, '');
+  if GraphResult <> GrOk then begin
+    Write('Grafikus hiba');
+    Readln;
+    Halt(1);
+  end;
+  SetColor(Green);
+  Line(10, 20, 100, 200);
+  SetColor(Red);
+  Rectangle(5, 15, 105, 205);
+  SetColor(Yellow);
+  Circle(65, 50, 30);
+  PutPixel(65, 50, White);
+  Readln;
+  CloseGraph;
+end.
+
+</code>
+
+<code pascal grafika.pas>
+program grafika; 
+ uses graph;
+ var gd,gm:smallint;  {DOS-ban gd,gm:integer;}
+     i:integer;
+ begin gd:=VGA; gm:=VGAHI; InitGraph(gd,gm,'');
+      if GraphResult<>GrOk then begin Write('Grafikus hiba'); Halt(1); end;
+      {grafikus eljárások és függvények}
+      for i:=1 to 10 do
+        circle(200,200,180-i*10);
+      line(200,200,30,200);
+      line(200,200,200,30);
+      moverel(25,25);linerel(30,30);
+      moverel(0,-30);linerel(-30,30);
+      OutTextXY(10,300,'Hello!');
+      Rectangle(20,20,60,60);
+      SetFillStyle(SolidFill,Green);
+      FloodFill(199,199,White);
+      SetFillStyle(HatchFill,Yellow);
+      for i:=1 to 4 do
+        FloodFill(20+i*20+2,198,White);
+      readln;
+      CloseGraph; 
+ end.
+</code>
+
+
+<code pascal snake.pas>
+program snake;
+uses crt;
+const bal=#75; fel=#72; jobb=#77; le=#80; esc=#27; max_hossz=200;
+var x,y,dx,dy,i,j,hossz:integer; ch:char;
+    xk,yk:array[1..max_hossz]of integer;
+begin
+  {játéktér}
+  for i:=2 to 78 do begin gotoxy(i,2);write('#'); gotoxy(i,24);write('#');end;
+  for i:=3 to 23 do begin gotoxy(2,i);write('#'); gotoxy(78,i);write('#');end;
+  i:=1; x:=10; y:=10; dx:=1; dy:=0; xk[i]:=x; yk[i]:=y; hossz:=5;
+  repeat
+    if keypressed then begin ch:=readkey;
+         if ch=#0 then ch:=readkey; end;
+    case ch of
+     bal: begin dx:=-1; dy:= 0; end;
+     fel: begin dx:= 0; dy:=-1; end;
+     jobb:begin dx:= 1; dy:= 0; end;
+     le:  begin dx:= 0; dy:= 1; end;
+    end;
+    x:=x+dx; y:=y+dy;
+    if (x<2)or(x>78)or(y<2)or(y>24) then
+       begin gotoxy(4,25);write('VEGE! <ENTER> - kilepes!'); readln; exit; end;
+    gotoxy(x,y); write('O');
+    if i<=hossz then i:=i+1 else i:=1;
+    if i<=hossz then j:=i+1 else j:=1;
+    xk[i]:=x; yk[i]:=y;
+    gotoxy(xk[j],yk[j]); write(' ');
+    delay(300);
+  until ch=esc;
+end.
+
+</code>
+
+
+<code pascal pontok.pas>
+program pontok;
+uses graph;
+var gd,gm:smallint;  i,j,x,y,c:integer;
+begin
+ gd:=detect;
+ initgraph(gd,gm,'');
+
+ rectangle(0,0,200,200);    {négyzet}
+ line(0,0,200,200);         {foátló}
+ line(0,200,200,0);         {mellékátló}
+ Randomize;
+
+ for i:=1 to 8000 do begin
+  x:=1+random(198);        {véletlen számok 1-199ig}
+  y:=1+random(198);
+  c:=1+random(14);
+  if (x>y)and(x+y>200+1)then  PutPixel(x,y,red);
+  if (x>y)and(x+y<200+1)then  PutPixel(x,y,blue);
+  if (x<y)and(x+y>200+1)then  PutPixel(x,y,green);
+  if (x<y)and(x+y<200+1)then  PutPixel(x,y,yellow);
+ end;
+
+ {PutPixel(10,10,green);
+ for i:=1 to 10 do
+  for j:=1 to 10 do
+   PutPixel(10+i,10+j,green);
+ }
+ readln;
+ closegraph;
+end.
+</code>
+
+
+<code pascal animacio.pas>
+program animacio;
+uses graph,crt;
+var gd,gm:smallint;  i:integer;
+begin
+ gd:=detect;
+ initgraph(gd,gm,'');
+ setcolor(yellow);
+ circle(50,50,40);
+ OutTextXY(10,150,'Animacio!');
+ for i:=0 to 400 do
+ begin
+   setcolor(yellow);
+   circle(50+i,50,40);
+   delay(50);
+   setcolor(black);
+   circle(50+i,50,40);
+ end;
+ OutTextXY(80,150,'Vege!');
+ readln;
+ closegraph;
+end.
+</code>
+

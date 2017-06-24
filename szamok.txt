@@ -1,0 +1,121 @@
+====== Számok ======
+
+<code pascal szamok.pas>
+program szamok;
+type    fajl=record
+         q:string;
+         v:longint;
+         p:byte;
+         t:string;
+        end;
+var
+        a:array[1..100] of fajl;
+        b,c:array[1..100] of string;
+        x:array[1..100] of integer;
+        i,j,n,min,max,h,szum:longint;
+        egy,ketto,harom,m:byte;
+        kerdes:string;
+        valasz:longint;
+        pont:byte;
+        f:text;
+        ch:char;
+        vel:word;
+        //tant:array[1..10] of string;
+Begin
+//1
+ Writeln('1. feladat');
+ Assign(f,'felszam.txt');
+ reset(F);
+ i:=0;
+  while not eof(f) do
+   begin
+    inc(i);
+    readln(f,a[i].q);
+    read(f,a[i].v);
+    read(f,a[i].p);
+    read(f,ch);
+    readln(f,a[i].t);
+   end;
+  n:=i;
+  writeln('Beolvasva a "felszam.txt".');
+//2
+ Writeln('2. feladat');
+ Writeln('Az adatfajlban ',n,' feladat van');
+//3
+ Writeln('3. feladat');
+ m:=0; egy:=0;ketto:=0;harom:=0;
+ For i:=1 to n do
+  if a[i].t='matematika' then
+  begin
+   inc(m);
+   if a[i].p=1 then inc(egy);      //inc(db[a[i].p]); //var db:array[1..3]of word;
+   if a[i].p=2 then inc(ketto);
+   if a[i].p=3 then inc(harom);
+  end;
+ Writeln('Az adatfajlban ',m,' matematika feladat van, 1 pontot er ',egy,
+     ' feladat, 2 pontot er ',ketto,' feladat, 3 pontot er ',harom,' feladat.');
+//4
+ Writeln('4. feladat');
+ min:=a[1].v;
+ max:=a[1].v;
+ for i:=1 to n do
+  if a[i].v>max then max:=a[i].v else
+  if a[i].v<min then min:=a[i].v;
+ writeln('Az adatf jlban tal lhat¢ v laszok sz m‚rt‚ke a [',min,';',max,'] intervallumon tal lhat¢');
+//5
+Writeln('5. feladat');
+ for i:=1 to n do
+  b[i]:=a[i].t;
+ for i:=1 to n-1 do
+  for j:=i+1 to n do
+   if b[i]=b[j] then b[j]:='';
+  j:=0;
+ for i:=1 to n do
+  if b[i]<>'' then
+  begin
+   inc(j);
+   c[j]:=b[i];
+  end;
+ For i:=1 to j do
+  writeln(c[i]);
+writeln('6.feladat');
+ writeln('Milyen temakorbol szeretne kerdest kapni?');
+ readln(kerdes);
+ randomize;
+ repeat
+   vel:=1+random(n);
+ until a[vel].t=kerdes;
+ //writeln(vel,' ',a[vel].t);
+ writeln(a[vel].q);
+ readln(valasz);
+ if a[vel].v=valasz then
+   pont:=a[vel].p;
+ writeln('A valasz ',pont,' pontot er.');
+ writeln('A helyes valasz: ',a[vel].v);
+ writeln('7.feladat');
+ for i:=1 to n do
+  x[i]:=i;
+ for i:=1 to n do
+ begin
+   vel:=1+random(n);
+   h:=x[i];
+   x[i]:=x[vel];
+   x[vel]:=h;
+ end;
+ szum:=0;
+ assign(f,'tesztfel.txt');
+ rewrite(f);
+ for i:=1 to 10 do
+ begin
+   writeln(f,a[x[i]].p,' ',a[x[i]].v,' ',a[x[i]].q);
+   szum:=szum+a[x[i]].p;
+ end;
+ writeln(f,'A feladatsorra osszensen ',szum,' pont adhato.');
+ close(f);
+ writeln('Kiirva a "tesztfel.txt"-be.');
+
+
+
+readln;
+end.
+</code>

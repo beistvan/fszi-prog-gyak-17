@@ -1,0 +1,191 @@
+====== Összefuttatás ======
+
+
+**Általános feladat**: Két rendezett sorozat uniója úgy, hogy a rendezettség megmaradjon.
+
+<code bash osszefuttat.txt>
+Eljárás:
+	I := 1
+	J := 1
+	K := 0
+	Ciklus amíg I <= N és J <= M
+		K := K + 1
+		Elágazás
+			A(I) < B(J) esetén 
+                            C(K) := A(I)
+			    I := I + 1
+			A(I) = B(J) esetén 
+                            C(K) := A(I)
+			    I := I + 1
+			    J := J + 1
+			A(I) > B(J) esetén 
+                            C(K) := B(J)
+			    J := J + 1
+		Elágazás vége
+	Ciklus vége
+	Ciklus amíg I <= N
+		K := K + 1
+		C(K) := A(I)
+		I := I + 1
+	Ciklus vége
+	Ciklus amíg J <= M
+		K := K + 1
+		C(K) := B(J)
+		J := J + 1
+	Ciklus vége
+Eljárás vége.
+</code>
+
+Pascal forráskód
+
+<code pascal osszefutatas.pas>
+program osszefutatas;
+const n = 10; m = 5;
+var a:array[1..n] of integer;
+    b:array[1..m] of integer;
+    c:array[1..n+m] of integer;
+    i,j,k:integer;
+begin
+   randomize;
+   // veletlen elemekbol allo tomb keszitese
+   for i:=1 to n do
+   begin
+     a[i]:=10+random(89);
+     write(a[i]:3);
+   end;
+   writeln;
+   for i:=1 to m do
+   begin
+     b[i]:=10+random(89);
+     write(b[i]:3);
+   end;
+   writeln;
+   // az a rendezese
+   for i:=1 to n-1 do
+     for j:=i+1 to n do
+       if a[i]>a[j] then
+       begin
+         k:=a[i];
+         a[i]:=a[j];
+         a[j]:=k;
+       end;
+   for i:=1 to n do
+     write(a[i]:3);
+   writeln;
+   // a b rendezese
+   for i:=1 to m-1 do
+     for j:=i+1 to m do
+       if b[i]>b[j] then
+       begin
+         k:=b[i];
+         b[i]:=b[j];
+         b[j]:=k;
+       end;
+   for i:=1 to m do
+     write(b[i]:3);
+   writeln;
+   // az a es a b rendezett tombok
+   // osszefutatatasa egy rendezett c tombe
+   i:=1;
+   j:=1;
+   k:=0;
+   while (i<=n) and (j<=m) do
+   begin
+     k:=k+1;
+     if a[i]<b[j] then
+     begin
+       c[k]:=a[i];
+       i:=i+1;
+     end else
+       if a[i]=b[j] then
+       begin
+         c[k]:=a[i];
+         i:=i+1;
+         j:=j+1;
+       end else
+         if a[i]>b[j] then
+         begin
+           c[k]:=b[j];
+           j:=j+1;
+         end;
+   end;
+   while i<=n do
+   begin
+     k:=k+1;
+     c[k]:=a[i];
+     i:=i+1;
+   end;
+   while j<=m do
+   begin
+     k:=k+1;
+     c[k]:=b[j];
+     j:=j+1;
+   end;
+   for i:=1 to k do
+     write(c[i]:3);
+   readln;
+end.
+
+
+</code>
+
+
+[[https://ideone.com/E19t9Z | Az <osszefutatas.pas> forráskódjának futtatása online ]]
+
+Órai gyakorlat
+
+(szükséges könyvtárak: [[inf-prog-fszi:eljarasok_es_fueggvenyek#a_tomb_iopas_koenyvtar|tomb_io]], [[inf-prog-fszi:eljarasok_es_fueggvenyek#a_tomb_rendpas_koenyvtar|tomb_rend]])
+
+<code pascal osszefutatas.pas>
+program osszefuttatas;
+uses tomb_io, tomb_rend;
+var  a,b,c:tomb;
+     n,m,i,j,k:byte;
+begin
+  beolvas(a,n,'a');
+  beolvas(b,m,'b');
+  kiir(a,n,'a');
+  kiir(b,m,'b');
+  minimum_rendezes(a, n);
+  kiir(a,n,'a rendezett a');
+  minimum_rendezes(b, m);
+  kiir(b,m,'a rendezett b');
+  i:=1;
+  j:=1;
+  k:=0;
+  while (i <= n) and (j <= m) do
+  begin
+    k:= k+1;
+    if a[i] < b[j] then
+    begin
+      c[k]:= a[i];
+      i:= i+1;
+    end;
+    if a[i] = b[j] then
+    begin
+      c[k]:= a[i];
+      i:= i+1;
+      j:= j+1;
+    end;
+    if a[i] > b[j] then
+    begin
+      c[k]:= b[j];
+      j:= j+1;
+    end;
+  end;
+  while i<= n do
+  begin
+    k:=k+1;
+    c[k]:= a[i];
+    i:= i+1;
+  end;
+  while j<= m do
+  begin
+    k:=k+1;
+    c[k]:= b[j];
+    j:= j+1;
+  end;
+  kiir(c,k,'c');
+  readln;
+end.
+</code>

@@ -1,0 +1,108 @@
+====== Útépítés ======
+
+<code pascal utepites.pas>
+program utepites;
+type jarmuv=record
+     o,p,m,ut:integer;
+     varos:char;
+     end;
+var i,j,n,x,c,akt,elozo:integer;
+    t:text;
+    k:char;
+    cs:jarmuv;
+    a:array[1..2000]of jarmuv;
+    mas:array[1..2000]of jarmuv;
+    ora:array[7..16]of record a,f:word;end;
+begin
+
+  assign(t,'forgalom.txt');
+  reset(t);
+  readln(t,n);
+  for i:=1 to n do
+    readln(t,a[i].o,a[i].p,a[i].m,a[i].ut,k,a[i].varos);
+  close(t);
+writeln('1. feladat');
+  writeln(n,' db sort olvastam be');
+writeln('2.feladat');
+  write('Kerem az n-edik utazo szamat : ');
+  readln(x);
+  if a[x].varos='F' then writeln('Also varos fele tart')
+                    else writeln('Felso varos fele tart');
+writeln('3.feladat');
+  j:=1;
+  for i:=1 to n do
+    if a[i].varos='F' then
+    begin
+      mas[j]:=a[i];
+      inc(j);
+    end;
+  i:=1;
+  while mas[i].o<>0 do
+    inc(i);
+  c:=i-1;
+  writeln('az utolso ket FElso varosba tarto auto kozotti kulombseg: ',
+          (mas[c].o-mas[c-1].o)+((mas[c].p-mas[c-1].p)*60)+(mas[c].m-mas[c-1].m),' mdp');
+writeln('4.feladat');
+  for i:=1 to n do
+    if a[i].varos='A' then
+      inc(ora[a[i].o].a)
+    else
+      inc(ora[a[i].o].f);
+  for i:=7 to 16 do
+    writeln(i:2,' ',ora[i].a,' ',ora[i].f);
+writeln('5. feladat');
+  mas:=a;
+  for i:=1 to n-1 do
+    for j:=1 to i-j do
+    if mas[j].ut>mas[j+1].ut then
+    begin
+      cs:=mas[j];
+      mas[j]:=mas[j+1];
+      mas[j+1]:=cs;
+    end;
+  //for i:=1 to 20 do
+  //  writeln(mas[i].o:2,mas[i].p:3,mas[i].m:3,mas[i].ut:3,mas[i].varos:2);
+  akt:=0;
+  j:=1;
+  i:=1;
+  while (j<=10) do
+  begin
+    if mas[i].ut<>akt then
+    begin
+      write(mas[i].o:2,mas[i].p:3,mas[i].m:3,1000/mas[i].ut:5:1,' m/s ');
+      if mas[i].varos='A' then writeln('Also')
+                          else writeln('Felso');
+      akt:=mas[i].ut;
+      inc(j);
+    end;
+    inc(i);
+  end;
+writeln('6.feladat');
+  j:=0;
+  for i:=1 to n do
+    if a[i].varos='F' then
+    begin
+      inc(j);
+      mas[j]:=a[i];
+    end;
+  n:=j;
+  //for i:=1 to n do
+  //  writeln(mas[i].o:2,mas[i].p:3,mas[i].m:3,mas[i].ut:4,mas[i].varos:2);
+  writeln('F (db): ',n);
+  akt:=0;
+  elozo:=0;
+  assign(t,'also.txt');
+  rewrite(t);
+  for i:=1 to n do
+    begin
+      akt:=mas[i].o*3600+mas[i].p*60+mas[i].m+mas[i].ut;
+      if elozo>akt then akt:=elozo;
+      //o=div3600 p=(p+m=mod3600)div60 m=(p+m=mod3600)mod60
+      writeln(t,akt div 3600,' ',(akt mod 3600)div 60,' ',(akt mod 3600)mod 60);
+      elozo:=akt;
+    end;
+  close(t);
+readln;
+end.
+
+</code>

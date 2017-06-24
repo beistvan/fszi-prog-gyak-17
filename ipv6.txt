@@ -1,0 +1,142 @@
+====== Ipv6 ======
+
+<code pascal ipv6.pas>
+program ipv6;
+var i,j,k,n,dok,glob,helyi,nulla,sorsz,maxind:integer;
+    min,anullanelkul,megrovidebbip:string[39]; v:string[4];
+    van:boolean;
+    a:array[1..500] of string[39];
+    ipk:array[1..8] of string[4];
+    db:array[1..8] of integer;
+    f:text;
+begin
+   assign(f,'ip.txt');
+   reset(f);
+   i:=0;
+   while not eof(f) do
+   begin
+     inc(i);
+     readln(f,a[i]);
+   end;
+   n:=i;
+   close(f);
+   {for i:=1 to n do
+   writeln(a[i]);   }
+   writeln('1. feladat');
+   writeln('Az adatok beolvasva az "ip.txt"-bol.');
+   writeln('2. feladat');
+   writeln(n,' adatsor van a fajlban');
+   writeln('3. feladat');
+   min:=a[1];
+   for i:=1 to n do
+     if a[i]<min then min:=a[i];
+   writeln('a legalacsonyabb tarolt ip cim: ');
+   writeln(min);
+   writeln('4. feladat');
+   dok:=0; glob:=0; helyi:=0;
+   for i:=1 to n do
+   begin
+     if (a[i][1]='2') and (a[i][1+1]='0') and (a[i][1+2]='0') and (a[i][1+3]='1')
+       and (a[i][1+4]=':') and (a[i][1+5]='0') and (a[i][1+6]='d') and (a[i][1+7]='b')
+       and (a[i][1+8]='8')
+       then
+         inc(dok);
+     if (a[i][1]='2') and (a[i][1+1]='0') and (a[i][1+2]='0') and (a[i][1+3]='1')
+       and (a[i][1+4]=':') and (a[i][1+5]='0') and (a[i][1+6]='e')
+       then
+         inc(glob);
+     if (a[i][1]='f') and (a[i][1+1]='c') or (a[i][1]='f') and (a[i][1+1]='d')
+       then
+         inc(helyi);
+   end;
+   writeln('globalis=  ',glob);
+   writeln('dokumentacios= ',dok);
+   writeln('helyi= ',helyi);
+   writeln('5. feladat');
+   Assign(f,'sok.txt');
+   rewrite(f);
+   for i:=1 to n do
+   begin
+     nulla:=0;
+     for j:=1 to length(a[i]) do
+       if a[i][j]='0' then inc(nulla);
+     if nulla>=18 then writeln(f,i,' ',a[i]);
+   end;
+   close(f);
+   writeln('A "sok.txt"-be kiirva a 18 db es tobb nullat tartalmazo ip-k.');
+   writeln('6. feladat');
+   writeln('kerek egy sorszamot: '); readln(sorsz);
+   writeln(a[sorsz]);
+   anullanelkul:='';
+   for i:=1 to 8 do
+   begin
+     v:=''; van:=false;
+     for j:=5*i-4 to 5*i-1 do
+     begin
+       if (a[sorsz][j]<>'0')then van:=true;
+       if van then  v:=v+a[sorsz][j];
+     end;
+     if v='' then v:='0';
+     anullanelkul:=anullanelkul+v;
+     if i<8 then anullanelkul:=anullanelkul+':';
+   end;
+   writeln(anullanelkul);
+   writeln('7. feladat');
+   //szetbontas ":" elvalasztoval --- stplit
+   i:=1;
+   j:=1;
+   repeat
+     k:=0;
+     while (i<=length(anullanelkul))and(anullanelkul[i]<>':') do
+     begin
+       inc(i);
+       inc(k);
+     end;
+     ipk[j]:=copy(anullanelkul,i-k,k);
+     inc(i);
+     inc(j);
+   until i > length(anullanelkul);
+   //hany darab 0-as sorozat van?
+   for i:=1 to 8 do
+     if ipk[i]='0' then
+     begin
+       j:=i;
+       while ipk[j]='0' do
+       begin
+         inc(db[i]);
+         inc(j);
+       end;
+     end;
+   for i:=1 to 8 do
+     write(db[i],' ');
+   //az elso leghosszabb kezdete az maxind indexu
+   van:=false;
+   maxind:=1;
+   for i:=2 to 7 do
+     if db[i]>db[maxind] then
+     begin
+       maxind:=i;
+       van:=true;
+     end;
+   writeln('maxind=',maxind);
+   if van then
+   begin
+     //a rovidites elott
+     for i:=1 to maxind-1 do
+       megrovidebbip:=megrovidebbip+ipk[i]+':';
+     //a plusz egy ":" a nullak helyett
+     megrovidebbip:=megrovidebbip+':';
+     //a rovidites utan
+     for i:=maxind+db[maxind] to 8 do
+     begin
+       megrovidebbip:=megrovidebbip+ipk[i];
+       if i < 8 then
+         megrovidebbip:=megrovidebbip+':';
+     end;
+     writeln(megrovidebbip);
+   end
+   else
+     writeln('Nem roviditheto tovabb.');
+readln;
+end.
+</code>

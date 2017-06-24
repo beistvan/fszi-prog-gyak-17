@@ -1,0 +1,111 @@
+====== Közúti ellenőrzés ======
+
+<code pascal kozuti_ellenorzes.pas>
+program kozuti_ellenorzes;
+type jarmu=record
+     ora,perc,mdp:integer;
+     rendszam:string[7];
+     end;
+var i,j,k,n,x,max,kul,imax,vizsgkezd:integer;
+    t,f:text;
+    a:array[1..500]of jarmu;
+    kat:array[1..3]of integer;
+    keres:string;
+    ch:char;
+begin
+  //1.feladat
+  assign(t,'jarmu.txt');
+  reset(t);
+  i:=0;
+  while not eof(t) do
+  begin
+    inc(i);
+    read(t,a[i].ora);
+    read(t,ch);
+    read(t,a[i].perc);
+    read(t,ch);
+    read(t,a[i].mdp);
+    read(t,ch);
+    readln(t,a[i].rendszam);
+  end;
+  close(t);
+  n:=i;
+  for i:=1 to n do
+    writeln(a[i].ora,' ',a[i].perc,' ',a[i].mdp,' ',a[i].rendszam);
+  writeln('osszesen: ',n);
+  //2.feladat
+  writeln('2. feladat');
+  writeln;
+  x:=(a[n].ora-a[2].ora+1);
+  writeln('A jarorok osszesen ',x,' orat dolgoztak');
+  //3.feladat
+  writeln('3.feladat ');
+  writeln;
+  k:=0;
+  for i:=8 to 13 do
+  begin
+    j:=k+1;
+    while (j<=n)and(a[j].ora<>i) do
+      inc(j);
+    k:=j;
+    writeln(a[k].ora,' ora: ',a[k].rendszam);
+  end;
+  //4.feladat
+  writeln('4.feladat ');
+  for i:=1 to n do
+  begin
+    if a[i].rendszam[1]='B' then
+      inc(kat[1]);
+    if a[i].rendszam[1]='K' then
+      inc(kat[2]);
+    if a[i].rendszam[1]='M' then
+      inc(kat[3]);
+  end;
+  writeln('busz: ',kat[1],' kamion: ',kat[2],' motor: ',kat[3],
+          ' egyeb: ',n-(kat[1]+kat[2]+kat[3]));
+  //5.feladat
+  writeln('5.feladat ');
+  max:=0;
+  imax:=0;
+  for i:=1 to n-1 do
+  begin
+    kul:=a[i+1].ora*3600+a[i+1].perc*60+a[i+1].mdp-
+         (a[i].ora*3600+a[i].perc*60+a[i].mdp);
+    if kul>max then
+    begin
+      max:=kul;
+      imax:=i;
+    end;
+  end;
+  writeln(a[imax].ora,':',a[imax].perc,':',a[imax].mdp,' - ',
+          a[imax+1].ora,':',a[imax+1].perc,':',a[imax+1].mdp);
+  //6.feladat
+  writeln('6.feladat ');
+  write('keresett rendszam: ');
+  readln(keres);
+  for i:=1 to n do
+  begin
+    j:=1;
+    while (j<=7)and((keres[j]='*')or(a[i].rendszam[j]=keres[j])) do
+      j:=j+1;
+    if j>7 then writeln(a[i].rendszam);
+  end;
+  //7.feladat
+  writeln('7.feladat ');
+  assign(f,'vizsgalt.txt');
+  rewrite(f);
+  vizsgkezd:=-300;
+  for i:=1 to n do
+  begin
+    if vizsgkezd+300<=a[i].ora*3600+a[i].perc*60+a[i].mdp then begin
+       writeln(a[i].ora,':',a[i].perc,':',a[i].mdp,' ',a[i].rendszam);
+       writeln(f,a[i].ora,':',a[i].perc,':',a[i].mdp,' ',a[i].rendszam);
+       vizsgkezd:=a[i].ora*3600+a[i].perc*60+a[i].mdp;
+    end;
+
+  end;
+  close(f);
+readln;
+end.
+
+</code>

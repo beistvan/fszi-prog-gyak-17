@@ -1,0 +1,152 @@
+====== Matematikai kifejezések programozása ======
+
+
+===== Beépített matematikai függvények =====
+
+A szabvány Pascal nyelvbe beépített matematikai függvények:
+
+^  Függvény  ^  Leírás  ^  Argumentum típusa  ^  Visszatérési típus  ^
+|  ''abs''  |  abszolút érték $\left|x\right|$  |  valós vagy egész  |  ugyanaz, mint az argumentum  |
+|  ''arctan''  |  arkusz-tangensfüggvény $\operatorname{arctg} x$  |  valós vagy egész  |  valós  |
+|  ''cos''  |  koszinusz radiánban $\cos x$  |  valós vagy egész  |  valós  |
+|  ''exp''  |  exponenciális függvény $e^x$  |  valós vagy egész  |  valós  |
+|  ''ln''  |  természetes logaritmus $\ln x$  |  valós vagy egész  |  valós  |
+|  ''round''  |  kerekítés  |  valós  |  egész  |
+|  ''sin''  |  szinusz radiánban $\sin x$  |  valós vagy egész  |  valós  |
+|  ''sqr''  |  négyzet $x^2$  |  valós vagy egész  |  ugyanaz, mint az argumentum  |
+|  ''sqrt''  |  négyzetgyök $\sqrt{x}$  |  valós vagy egész  |  valós  |
+|  ''trunc''  |  csonkolás  |  valós vagy egész  |  egész  |
+
+A felsorolástípusoknál (egész vagy karaktertípus) az előző vagy a következő elemek kiválasztására használt függvények:
+
+^  Függvény  ^  Leírás  ^  Argumentum típusa  ^  Visszatérési típus  ^
+|  ''chr''  |  ASCII kód  |  egész  |  karaktertípus  |
+|  ''ord''  |  sorszám  |  egész vagy karaktertípus  |  egész  |
+|  ''pred''  |  megelőző sorszám  |  egész vagy karaktertípus  |  ugyanaz, mint az argumentum  |
+|  ''succ''  |  következő sorszám  |  egész vagy karaktertípus  |  ugyanaz, mint az argumentum  |
+
+===== Az $e$ és a $\pi$ állandók =====
+
+Az $e$ szám (2,7182818284...):
+
+$e = e^1$
+
+<code pascal e.pas>
+e := exp(1);
+</code>
+
+A $\pi$ értéke (3,1415926535...):
+
+$\pi = 4\arctan\left(1\right)$
+
+<code pascal pi.pas>
+pi := 4 * arctan(1);
+</code>
+
+===== A mínusz egy egész kitevőn =====
+
+ $f = \left(-1\right)^n = \left\{  \begin{eqnarray*} 
+1, & & \text{ ha  } n \text{ páros, } \\
+-1, & & \text{ ha  } n \text{ páratlan. } 
+\end{eqnarray*} \right\}
+$  
+
+<code pascal elojel.pas>
+if n mod 2 = 0 then
+  f := 1
+else
+  f := -1;
+</code>
+
+  
+    
+===== Tetszőleges alapú logaritmus =====
+
+Az $a$ alapú logaritmus képlete:
+
+$\log_a x = \displaystyle\frac{\ln x}{\ln a}$
+
+<code pascal log.pas>
+log := ln(x) / ln(a);
+</code>
+
+===== Tetszőleges hatványra való emelés =====
+
+A hatványra emelés:
+
+$x^y = e^{y\ln x}$
+
+<code pascal exp.pas>
+xy := exp(y * ln(x));
+</code>
+
+===== N-ed fokú gyök =====
+
+Az $n$-ed fokú gyök képlete:
+
+$f = \sqrt[y]x = x^{\frac{1}{y}}=e^{\frac{1}{y}\ln x}$
+
+<code pascal ngyok.pas>
+f := exp(1.0 / y * ln(x));
+</code>
+
+Ha az $n$ páratlan, akkor létezik negatív argumentumból is gyök, és ez negatív lesz:
+
+$n = (2k+1),k\in Z, $ \\ 
+$f = \sqrt[y]x = \operatorname{sgn}\left(x\right)\left|x\right|^{\frac{1}{y}}=\operatorname{sgn}\left(x\right)e^{\frac{1}{y}\ln \left|x\right|},$
+
+Ahol az $\operatorname{sgn}\left(x\right)$ -- az $x$ előjele.
+
+<code pascal ngyok3.pas>
+x := -27;
+y := 3;
+f := -exp(1.0 / y * ln(abs(x)));
+</code>
+
+
+===== Inverz trigonometrikus függvények =====
+
+Az inverz trigonometrikus függvények:
+
+$\arcsin x = \operatorname{arctg}\displaystyle\frac{x}{\sqrt{1-x^2}}, -1\leq x \leq 1,$ \\
+
+$\arccos x = \operatorname{arctg}\displaystyle\frac{\sqrt{1-x^2}}{x}, -1\leq x \leq 1,$ \\
+
+$\operatorname{arcctg} x = \operatorname{arctg}\displaystyle\frac{1}{x},$ \\
+
+$\operatorname{arcsec} x = \operatorname{arctg}\sqrt{x^2-1},$ \\
+
+$\operatorname{arccosec} x = \operatorname{arctg}\displaystyle\frac{1}{\sqrt{x^2-1}}.$ \\
+
+<code pascal inverztrig.pas>
+arcsin := arctan(x / sqrt(1 - x * x));
+arccos := arctan(sqrt(1 - x * x) / x);
+arcctg := arctan(1.0 / x);
+arcsec := arctan(sqrt(x * x - 1));
+arccosec := arctan(1.0 / sqrt(x * x - 1));
+</code>
+
+===== Hiperbolikus függvények =====
+
+A hiperbolikus függvények:
+
+$\operatorname{sh} x = \displaystyle\frac{e^x-e^{-x}}{2},$ \\
+
+$\operatorname{ch} x = \displaystyle\frac{e^x+e^{-x}}{2},$ \\
+
+$\operatorname{th} x = \displaystyle\frac{e^x-e^{-x}}{e^x+e^{-x}},$ \\
+
+$\operatorname{cth} x = \displaystyle\frac{e^x+e^{-x}}{e^x-e^{-x}},$ \\
+
+$\operatorname{sch} x = \displaystyle\frac{2}{e^x+e^{-x}},$ \\
+
+$\operatorname{csch} x = \displaystyle\frac{2}{e^x-e^{-x}}.$ 
+
+<code pascal hiperbolikus.pas>
+sh := (exp(x) - exp(-x)) / 2;
+ch := (exp(x) + exp(-x)) / 2;
+th := (exp(x) - exp(-x)) / (exp(x) + exp(-x));
+cth := (exp(x) + exp(-x)) / (exp(x) - exp(-x));
+sch := 2 / (exp(x) + exp(-x));
+csch := 2 / (exp(x) - exp(-x));
+</code>

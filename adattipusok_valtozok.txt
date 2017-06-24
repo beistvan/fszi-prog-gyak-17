@@ -1,0 +1,295 @@
+====== Adattípusok. Állandók. Változók deklarálása. Összetett adattípusok. Rekord típus ======
+
+
+===== Állandók =====
+Az állandók deklarálás a ''const'' szakaszban történik.
+
+<code pascal allando.txt>
+const
+  azonosító = érték;
+</code>
+
+Példa.
+
+<code pascal allandok.pas>
+const
+  pi = 3.14;
+  avogadro = 6.022E23;
+  ev = 2017;
+  nev = 'Marci';
+  megfelelt = true;
+</code>
+
+Típusos állandók
+
+<code pascal tipusos_allandok.pas>
+const
+  r : real = 20;
+</code>
+
+
+===== Változók =====
+A változók deklarálás a ''var'' szakaszban történik.
+
+<code pascal valtozo.txt>
+var
+  azonosító : adattípus;
+</code>
+
+===== Adattípusok =====
+
+A Pascal alapvető elemi típusai:
+
+  * ''integer'' - egész: -32768-től 32767-ig
+  * ''real'' - valós: 3.4x10<sup>-38</sup>-tól 3.4x10<sup>38</sup>-ig
+  * ''char'' - karakter: pl. '' 'a' '', '' ' ' '', '' '+' '', '' '#9' '', '' '#$10' '' stb.
+  * ''boolean'' - logikai: ''true'' (igaz) vagy ''false'' (hamis)
+
+A szöveges adattípusokat karakterláncokban tárolják, úgynevezett ''string'' típusban, melynek hossz maximum 255 karakter lehet.
+
+Példa
+
+<code pascal valtozok.pas>
+var
+  ev, ho, jegy : integer;
+  trulet : real;
+  betu : char;
+  leadva : boolean;
+  keresznev : string;  
+</code>
+
+Egyéb FreePascal szöveges adattípusok:
+  * ''WideChar'' - két byte-os, azaz unicode vagy UTF-16 kódolású karakter
+  * ''PChar'' - null-karakter ('' '#0' '') végződésű karakterlánc
+  * ''ShortString'' - maximum 255 karakter hosszúságú karakterlánc
+  * ''AnsiString'' - ennek a karakterlánc-típusnak a hossza nincs korlátozva
+  * ''Widestrings'' - unicode vagy UTF-16 kódolású karaktereket tároló karakterlánc
+
+Egész típusok a FreePascal-ban
+
+
+^  Típus  ^  Értékhalmaz  ^  Tárfoglalás bájtokban ^
+|  Byte  |  0 .. 255  |  1  |
+|  Shortint  |  -128 .. 127  |  1  |
+|  Smallint  |  -32768 .. 32767  |  2  |
+|  Word  |  0 .. 65535  |  2  |
+|  Integer  |  smallint vagy longint  |  2 vagy 4  |
+|  Cardinal  |  longword  |  4  |
+|  Longint  |  -2147483648 .. 2147483647  |  4  |
+|  Longword  |  0 .. 4294967295  |  4  |
+|  Int64  |  -9223372036854775808 .. 9223372036854775807  |  8  |
+|  QWord  |  0 .. 18446744073709551615	8  |
+
+Valós típusok a FreePascal-ban
+
+^  Típus  ^  Értékhalmaz  ^  Értékes jegyek  ^  Tárfoglalás bájtokban ^
+|  Real  |  platformfüggő  |  ???  |  4 vagy 8  |
+|  Single  |  1.5E-45 .. 3.4E38  |  7-8  |  4  |
+|  Double  |  5.0E-324 .. 1.7E308  |  15-16  |  8  |
+|  Extended  |  1.9E-4932 .. 1.1E4932  |  19-20  |  10  |
+|  Comp  |  -2E64+1 .. 2E63-1  |  19-20  |  8  |
+|  Currency  |  -922337203685477.5808 .. 922337203685477.5807  |  8  |
+
+
+===== Saját típus deklarálása =====
+
+<code pascal sajattipus.txt>
+type
+  adattípus_azonosító = típus_specifikáció;
+</code>
+
+
+===== Felsorolás típus =====
+
+Formátum
+
+<code pascal felsorolas.txt>
+type
+  adattípus_azonosító = (azonosító_1, azonosító_2, ... , azonosító_n);
+</code>
+
+Példa
+
+<code pascal felsorolas.pas>
+program kartyazas;
+type
+  kartya_szin = (tok, makk, piros, zold);
+var
+  piros_kartya : kartya_szin;
+begin
+  piros_kartya := piros;
+end.
+</code>
+
+
+===== Tartomány típus =====
+
+Formátum
+
+<code pascal tartomany.txt>
+type
+  tartomany_tipus_azonosító = alsó_korlát .. felső_korlát;
+</code>
+
+Példa
+
+<code pascal tartomany.pas>
+program kartyaszinek;
+type
+  kartya_szin = (tok, makk, piros, zold);
+  kartya_szin_tartomany = piros .. zold;
+var
+  piros_kartya : kartya_szin_tartomany;
+begin
+  piros_kartya := piros;
+end.
+</code>
+
+===== Halmaz típus =====
+
+Formátum
+
+<code pascal halmaz.txt>
+type
+  halmaz_azonosito = set of alaptípus;
+</code>
+
+Példa
+
+<code pascal halmazok.pas>
+program halmazok;
+type
+    abc = set of 'a'..'z'; 
+    szamok = set of 0..9; 
+    evszak = set of (tavasz, nyar, osz, tel);
+var a, b, c : szamok;
+begin
+  {egyesítés}
+  A := [0, 2, 5, 9]; 
+  B := [1, 2, 4, 6]; 
+  C := A + B;           
+  {eredmény: 
+   C = [ 0, 1, 2, 4, 5, 6, 9]}
+  
+  {metszet}
+  A := [0, 2, 5, 9]; 
+  B := [1, 2, 4, 6]; 
+  C := A * B;
+  {eredmény: C = [2]}
+
+  {különbség}
+  A := [0, 2, 5, 9]; 
+  B := [1, 2, 4, 6]; 
+  C := A - B;
+  {eredmény: 
+   C = [0, 5, 9]}
+  
+end.
+</code>
+
+
+===== Rekord típus =====
+
+Formátum
+
+<code pascal rekord.txt>
+type  
+  rekordtpíus_azonosító = record
+    mezőnév_1 : adattípus_1;
+    ...
+    mezőnév_n : adattípus_n;
+  end;
+</code>
+
+Rekord mezőhöz való hozzáférés:
+
+<code pascal rekord_hozzafer.txt>
+rekordtípus_azonosító.mezőnév_1
+</code>
+
+Példa rekordok kezelésére
+
+<code pascal rekord.pas>
+program rekord;
+type
+  tanulo_tipus = record
+    nev : string;
+    szuletesi_ev : word;
+  end;
+var 
+  tanulo: tanulo_tipus;
+begin
+  tanulo.nev := 'Kelep Elek';
+  tanulo.szuletesi_ev := 2000;
+end.
+
+</code>
+
+
+A ''With'' parancs segít leegyszerűsíteni a rekord mezőihez való hozzáférést.
+
+<code pascal with.txt>
+With rekord_változó do
+  mezőnév_1 := érték_1;
+    ...
+end;
+</code>
+
+Példa a ''With'' parancs használatára
+
+<code pascal with.pas>
+With tanulo do
+  nev := 'Kelep Elek';
+  szuletesi_ev := 2000;
+end;
+</code>
+
+
+===== Mutató adattípus =====
+
+Formátum
+
+<code pascal mutato.txt>
+type
+  mutató_típus = ^adattípus;
+</code>
+
+Példa
+
+<code pascal mutatok.pas>
+program mutatok;
+type
+  egesz_mutato = ^integer;
+var 
+  p_egesz: egesz_mutato;
+begin
+  Writeln('A lefoglalas elott: ',memavail);
+  {Szabad memória: 262080}
+
+  {A memória lefoglalása}
+  New(p_egesz);
+  Writeln('A lefoglalas utan: ',memavail);
+  {Szabad memória: 262064}
+
+  {Értékadás}
+  p_egesz^ := 5;
+
+  {A memória felszabadítása}
+  Dispose(p_egesz);
+  Writeln('A felszabaditas utan: ',memavail);
+  {Szabad memória: 262080}
+  Readln;
+end.
+</code>
+
+Előre definiált mutató.
+
+<code pascal eloremutato.pas>
+type
+  PLancoltLista = ^LancoltLista;
+  LancoltLista = record
+    adat : integer;
+    next : PLancoltLista;
+  end;
+
+</code>

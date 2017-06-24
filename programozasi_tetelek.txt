@@ -1,0 +1,24 @@
+===== Programozási tételek =====
+  * Egy sorozathoz egy érték hozzárendelése
+    - [[inf-prog-fszi:oesszegzes_tetele|Összegzés tétele]]
+    - [[inf-prog-fszi:szorzas_tetele|Szorzás tétele]]
+    - [[inf-prog-fszi:eldoentes_tetele|Eldöntés tétele]]
+    - [[inf-prog-fszi:kivalasztas_tetele|Kiválasztás tétele]]
+    - [[inf-prog-fszi:megszamlalas_tetele|Megszámlálás tétele]]
+    - Keresések
+      - [[inf-prog-fszi:linearis_kereses_tetele|Lineáris keresés tétele]]
+      - [[inf-prog-fszi:logaritmikus_kereses_tetele|Logaritmikus keresés tétele]]
+    - [[inf-prog-fszi:maximum_kivalasztas_tetele|Maximumkiválasztás tétele]]
+    - [[inf-prog-fszi:minimum_kivalasztas_tetele|Minimumkiválasztás tétele]]
+
+  * Egy sorozathoz egy sorozat hozzárendelése
+    - [[inf-prog-fszi:kivalogatas_tetele|Kiválogatás tétele]]
+    - Rendezések
+      - [[inf-prog-fszi:koezvetlen_kivalasztasos_rendezes|Rendezés közvetlen kiválasztással]]
+      - [[inf-prog-fszi:rendezes_minimum-maximum-kivalasztassal|Rendezés minimum kiválasztással]]
+      - [[inf-prog-fszi:buborekos_rendezes|Buborékos rendezés]]
+      - [[inf-prog-fszi:egyszeru_beilleszteses_rendezes|Egyszerű beillesztéses rendezés]]
+    - [[inf-prog-fszi:metszetkepzes|Metszetképzés]]
+    - [[inf-prog-fszi:uniokepzes|Unióképzés]]
+    - [[inf-prog-fszi:oesszefuttatas|Összefuttatás]]
+    - [[inf-prog-fszi:backtrack_-_visszalepeses_kereses|Backtrack-visszalépéses keresés]]

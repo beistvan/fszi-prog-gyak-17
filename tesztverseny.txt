@@ -1,0 +1,133 @@
+
+<code pascal tesztverseny.pas>
+program tesztverseny;
+const valaszok_max = 500;
+type
+  valasz = record
+    kod: string[5];
+    felelet:  string[14];
+    pont: byte;
+  end;
+var
+  a:array[1..valaszok_max] of valasz;
+  i,j,k,n:integer; sor:string;
+  helyes_felelet: string[14];
+  versenyzo_id: string[5];
+  versenyzo_valasz: string[14];
+  csak_helyes_valasz: string[14];
+  feladat_sorszama: byte;
+  db_helyes: word;
+  pontszam, pont: byte;
+  cs: valasz;
+  f: text;
+begin
+  //1. feladat
+  write('1. feladat: ');
+  assign(f, 'valaszok.txt');
+  reset(f);
+  readln(f,helyes_felelet);
+  //writeln(helyes_felelet);
+  i:=0;
+  while not eof(f) do
+  begin
+    i:=i+1;
+    readln(f, sor);
+    a[i].kod:=copy(sor,1,pos(' ',sor)-1);
+    a[i].felelet:=copy(sor,pos(' ',sor)+1,14);
+    //writeln(a[i].kod,' ',a[i].felelet);
+  end;
+  n:=i;
+  writeln('Az adatok beolvasasa');
+  writeln;
+  close(f);
+  //2. feladat
+  write('2. feladat: ');
+  writeln('A vetelkedon ',n,' versenyzo indult.');
+  writeln;
+  //3. feladat
+  write('3. feladat: ');
+  write('A versenyzo azonositoja = ');
+  readln(versenyzo_id);
+  //a versenyzo keresese
+  i:=1;
+  while (i<=n)and(a[i].kod<>versenyzo_id) do
+    inc(i);
+  if i<=n then
+    versenyzo_valasz:=a[i].felelet;
+  writeln(versenyzo_valasz, '  (a versenyzo valasza)');
+  writeln;
+  //4. feladat
+  writeln('4. feladat: ');
+  writeln(helyes_felelet, '  (a helyes megoldas)');
+  csak_helyes_valasz:='              ';
+  for i:=1 to length(helyes_felelet) do
+    if helyes_felelet[i] = versenyzo_valasz[i] then
+      csak_helyes_valasz[i]:='+'
+    else
+      csak_helyes_valasz[i]:=' ';
+  writeln(csak_helyes_valasz, '  (a versenyzo helyes valaszai)');
+  writeln;
+  //5. feladat
+  write('5. feladat: ');
+  write('A feladat sorszama = ');
+  readln(feladat_sorszama);
+  db_helyes:=0;
+  for i:=1 to n do
+    if a[i].felelet[feladat_sorszama]=helyes_felelet[feladat_sorszama]
+    then
+      inc(db_helyes);
+  writeln('A feladatra ',db_helyes, ' fo, a versenyzok ',
+          db_helyes/n*100:5:2,'%-a adott helyes valaszt.');
+  writeln;
+  //6. feladat
+  writeln('6. feladat: A versenyzok pontszamanak meghatarozasa');
+  assign(f,'pontok.txt');
+  rewrite(f);
+  for i:=1 to n do
+  begin
+    pontszam:=0;
+    for j:=1 to length(helyes_felelet) do
+      if helyes_felelet[j] = a[i].felelet[j] then
+      begin
+        case j of
+          1..5  : pont:=3;
+          6..10 : pont:=4;
+          11..13: pont:=5;
+          14    : pont:=6;
+        end;
+        pontszam := pontszam + pont;
+        a[i].pont:=pontszam;
+      end;
+    writeln(f,a[i].kod, ' ', pontszam); {kiratas a fajlba}
+    //writeln(a[i].kod, ' ', pontszam); {kiratas a kepernyore}
+  end;
+  close(f);
+  writeln;
+  //7. feladat
+  writeln('7. feladat: A verseny legjobbjai:');
+  for i:=1 to n-1 do
+    for j:=i+1 to n do
+      if a[i].pont<a[j].pont then
+      begin
+        cs:=a[i];
+        a[i]:=a[j];
+        a[j]:=cs;
+      end;
+  i:=1;
+  k:=1;
+  while (k<=3)and(i<=n) do
+  begin
+    j:=i;
+    while a[i].pont=a[j].pont do
+    begin
+      writeln(k,'. dij (',a[j].pont, ' pont): ', a[j].kod);
+      j:=j+1;
+    end;
+    inc(k);
+    i:=j;
+  end;
+  readln;
+end.
+
+
+</code>
